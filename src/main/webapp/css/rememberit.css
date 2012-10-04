@@ -39,6 +39,7 @@
 }
 
 .actions {
+    display: none;
     float: left;
     position: absolute;
     left: -30px;
