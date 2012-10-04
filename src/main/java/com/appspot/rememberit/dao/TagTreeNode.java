@@ -1,4 +1,4 @@
-package com.appspot.rememberit.dao.json;
+package com.appspot.rememberit.dao;
 
 import com.appspot.rememberit.dao.Tag;
 

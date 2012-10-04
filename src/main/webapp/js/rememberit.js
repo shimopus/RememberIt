@@ -1,5 +1,4 @@
-$("#tagTreeContainer").jstree(
-    {
+$("#tagTreeContainer").jstree({
         "themes" : {
             "theme" : "classic",
             "dots" : false,
@@ -26,7 +25,7 @@ Backbone.View.prototype.close = function () {
     this.unbind();
 };
 
-var rememberIt = {
+var remIt = {
     modulesName: [],
 
     module: function() {
@@ -37,7 +36,7 @@ var rememberIt = {
                 return modules[name];
             }
 
-            rememberIt.modulesName.push(name);
+            remIt.modulesName.push(name);
             return modules[name] = {
                 "name": name
             };
@@ -48,10 +47,10 @@ var rememberIt = {
 
         var deferreds = [];
 
-        $.each(rememberIt.modulesName, function(index, moduleName) {
-            var module = rememberIt.module(moduleName);
+        $.each(remIt.modulesName, function(index, moduleName) {
+            var module = remIt.module(moduleName);
             if (module.View) {
-                deferreds.push($.get('templates/' + moduleName + '.html', function(data) {
+                deferreds.push($.get('/templates/' + moduleName + '.html', function(data) {
                     module.View.prototype.template = _.template(data);
                 }, 'html'));
             } else {
@@ -69,9 +68,26 @@ var RememberItRouter = Backbone.Router.extend({
     },
 
     routes: {
+        "" : "home"
+    },
+
+    home: function(){
+        var Link = remIt.module("link");
+        var linksView = new Link.ListView({
+            model: new Link.Collection()
+        });
+        linksView.model.fetch({
+            success: function () {
+                linksView.render();
+                $("#linksContainer").html(linksView.el);
+            }
+        });
     }
 });
 
-rememberIt.loadTemplates(function() {
-    Backbone.history.start();
+$(function() {
+    remIt.loadTemplates(function() {
+        remIt.app = new RememberItRouter();
+        Backbone.history.start();
+    })
 });

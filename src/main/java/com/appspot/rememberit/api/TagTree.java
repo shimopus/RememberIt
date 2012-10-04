@@ -1,7 +1,7 @@
 package com.appspot.rememberit.api;
 
 import com.appspot.rememberit.dao.Tag;
-import com.appspot.rememberit.dao.json.TagTreeNode;
+import com.appspot.rememberit.dao.TagTreeNode;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
