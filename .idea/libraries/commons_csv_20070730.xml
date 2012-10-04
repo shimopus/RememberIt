@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="commons-csv-20070730">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/commons-csv-20070730.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

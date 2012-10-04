@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>RememberIt</title>
+
+    <link rel="stylesheet" href="css/lib/bootstrap.css">
+    <link rel="stylesheet" href="css/lib/jquery.ui.autocomplete.css">
+    <link rel="stylesheet" href="css/lib/jquery.ui.core.css">
+    <link rel="stylesheet" href="css/rememberit.css">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row-fluid page-header">
+        <div class="span2">
+            <a href="#" title="RememberIt - Home" class="logo"></a>
+        </div>
+        <div class="span8 center">
+            <h1>RememberIt - remember it all<small> for future</small></h1>
+            <form action="addLink" class="form-inline">
+                <button class="btn btn-large btn-primary" type="button" title="Add Link">Add Link</button>
+                <label class="label-add-link">
+                    <input class="input-block-level" type="text"
+                           placeholder="Type or past URL hear or just drug it hear and drop"
+                           title="Type or past URL hear or just drug it hear and drop"/>
+                </label>
+            </form>
+        </div>
+        <div>
+            <span class="text-info">You are
+                <i class="icon-user"></i>
+                <b>shimopus</b>
+            </span>
+            <button type="button" class="btn btn-link" title="Log out">Log out</button>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span3">
+        </div>
+        <div class="span9">
+            <form action="search" class="form-search">
+                <div class="input-append">
+                    <label class="label-search">
+                        <input type="text" class="search-query input-block-level"
+                               placeholder="Fast search by tags and links"
+                               title="Fast search by tags and links"/>
+                    </label>
+                    <button type="reset" class="btn" title="Clear">
+                        <i class="icon-remove"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span3" id="tagTreeContainer">
+        </div>
+        <div class="span6">
+            <ol class="unstyled">
+                <li class="link-container">
+                    <div class="actions btn-group btn-group-vertical">
+                        <button class="btn btn-link btn-icon" type="button" title="Edit"><i class="icon-edit"></i></button>
+                        <button class="btn btn-link btn-icon" type="button" title="Delete"><i class="icon-trash"></i></button>
+                        <button class="btn btn-link btn-icon" type="button" title="Share"><i class="icon-share"></i></button>
+                    </div>
+                    <section>
+                        <div class="link-image img-rounded img-polaroid">
+                            <img src="img/ya.jpg" alt="Link one name"/>
+                        </div>
+                        <a href="link">Link one name</a>
+                        <p class="muted"> (url of link one)</p>
+                        <blockquote class="link-description">
+                            <p>Big description about this link is very big and i don`t know what can i do with it</p>
+                        </blockquote>
+                        <div class="tags-container">
+                            <a class="label">Success</a>
+                            <a class="label">Success</a>
+                            <a class="label">Success</a>
+                            <a class="label">Success</a>
+                            <a class="label">Success</a>
+                        </div>
+                    </section>
+                </li>
+                <li class="link-container">
+                    <div class="actions btn-group btn-group-vertical">
+                        <button class="btn btn-link btn-icon" type="button" title="Edit"><i class="icon-edit"></i></button>
+                        <button class="btn btn-link btn-icon" type="button" title="Delete"><i class="icon-trash"></i></button>
+                        <button class="btn btn-link btn-icon" type="button" title="Share"><i class="icon-share"></i></button>
+                    </div>
+                    <section>
+                        <div class="link-image img-rounded img-polaroid">
+                            <img src="img/mail.png" alt="Link one name"/>
+                        </div>
+                        <a href="link">Link one name</a>
+                        <p class="muted"> (url of link one)</p>
+                        <blockquote class="link-description">
+                            <p>Big description about this link is very big and i don`t know what can i do with it</p>
+                        </blockquote>
+                        <div class="tags-container">
+                            <a class="label">Success</a>
+                            <a class="label">Success</a>
+                            <a class="label">Success</a>
+                            <a class="label">Success</a>
+                            <a class="label">Success</a>
+                        </div>
+                    </section>
+                </li>
+                <li class="link-container">
+                    <div class="actions btn-group btn-group-vertical">
+                        <button class="btn btn-link btn-icon" type="button" title="Edit"><i class="icon-edit"></i></button>
+                        <button class="btn btn-link btn-icon" type="button" title="Delete"><i class="icon-trash"></i></button>
+                        <button class="btn btn-link btn-icon" type="button" title="Share"><i class="icon-share"></i></button>
+                    </div>
+                    <section>
+                        <div class="link-image img-rounded img-polaroid">
+                            <img src="img/habrahabr.png" alt="Link one name"/>
+                        </div>
+                        <a href="link">Link one name withowt image</a>
+                        <p class="muted"> (url of link one)</p>
+                        <blockquote class="link-description">
+                            <p>Big description about this link is very big and i don`t know what can i do with it</p>
+                        </blockquote>
+                        <div class="tags-container">
+                            <a class="label">Success</a>
+                            <a class="label">Success</a>
+                            <a class="label">Success</a>
+                            <a class="label">Success</a>
+                            <a class="label">Success</a>
+                        </div>
+                    </section>
+                </li>
+            </ol>
+        </div>
+        <div class="span3">
+            tree
+        </div>
+    </div>
+    <div class="modal-footer center">
+        <small>Copyleft(c) Sergey Babinsky</small>
+    </div>
+</div>
+
+
+    <script src="js/lib/jquery-1.8.2.js" type="text/javascript"></script>
+    <script src="js/lib/underscore.js" type="text/javascript"></script>
+    <script src="js/lib/backbone.js" type="text/javascript"></script>
+    <script src="js/lib/bootstrap.js" type="text/javascript"></script>
+    <script src="js/lib/jquery.ui.core.js" type="text/javascript"></script>
+    <script src="js/lib/jquery.ui.position.js" type="text/javascript"></script>
+    <script src="js/lib/jquery.ui.widget.js" type="text/javascript"></script>
+    <script src="js/lib/jquery.ui.autocomplete.js" type="text/javascript"></script>
+    <script src="js/lib/jquery.cookie.js" type="text/javascript"></script>
+    <script src="js/lib/jquery.hotkeys.js" type="text/javascript"></script>
+    <script src="js/lib/jquery.jstree.js" type="text/javascript"></script>
+
+    <script src="js/rememberit.js" type="text/javascript"></script>
+</body>
+</html>

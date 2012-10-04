@@ -1,0 +1,67 @@
+.center {
+    text-align: center;
+}
+
+.logo {
+    background: url(../img/remember.png) no-repeat;
+    height: 100px;
+    width: 165px;
+    display: block;
+}
+
+.jstree a.label {
+    color: white;
+}
+
+.label:hover {
+    background-color: #468847;
+}
+
+.link-image {
+    margin: 0 5px 5px 0;
+    width: 150px;
+    max-height: 80px;
+    overflow: hidden;
+    float: left;
+}
+
+.tags-container {
+    margin-top: -10px;
+}
+
+.link-container {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.link-description {
+    clear: both;
+}
+
+.actions {
+    float: left;
+    position: absolute;
+    left: -30px;
+}
+
+.btn-icon {
+    padding: 4px;
+    background-color: #E6E6E6;
+}
+
+.btn-icon:hover {
+    background-color: #9fc2db;
+    border: 1px solid #000000;
+}
+
+.label-add-link {
+    width: 60%;
+}
+
+.label-search {
+    width: 100%;
+}
+
+.input-append {
+    width: 60%;
+}
