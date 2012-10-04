@@ -1,7 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9ced1744-76a9-4139-98d8-9c766cad7f98" name="Default" comment="" />
+    <list default="true" id="9ced1744-76a9-4139-98d8-9c766cad7f98" name="Default" comment="">
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__com_sun_jersey_jersey_core_1_13.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__com_sun_jersey_jersey_server_1_13.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__com_sun_jersey_jersey_servlet_1_13.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__commons_discovery_commons_discovery_0_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__commons_logging_commons_logging_1_0_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__dom4j_dom4j_1_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__isorelax_isorelax_20020414.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__javax_ws_rs_javax_ws_rs_api_2_0_m09.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__jaxen_jaxen_1_0_FCS.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__jdom_jdom_1_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__msv_msv_20020414.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__org_apache_ant_ant_1_7_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__org_apache_ant_ant_launcher_1_7_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__org_apache_geronimo_specs_geronimo_j2ee_deployment_1_1_spec_1_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__org_codehaus_cargo_cargo_core_api_container_1_2_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__org_codehaus_cargo_cargo_core_api_generic_1_2_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__org_codehaus_cargo_cargo_core_api_module_1_2_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__org_codehaus_cargo_cargo_core_api_util_1_2_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__org_codehaus_cargo_cargo_core_container_tomcat_1_2_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__relaxngDatatype_relaxngDatatype_20020414.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__saxpath_saxpath_1_0_FCS.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\.idea\libraries\Maven__xml_apis_xml_apis_1_0_b2.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rememberit.iml" afterPath="$PROJECT_DIR$/rememberit.iml" />
+    </list>
     <ignored path="RememberIt.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -71,7 +97,7 @@
       <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="54" selection-start="2601" selection-end="2601" vertical-scroll-proportion="0.64378697">
+            <state line="105" column="150" selection-start="5261" selection-end="5261" vertical-scroll-proportion="1.36">
               <folding />
             </state>
           </provider>
@@ -83,6 +109,9 @@
     <FindUsagesManager>
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
@@ -185,7 +214,7 @@
       </profile-state>
     </entry>
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -211,6 +240,16 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -369,9 +408,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files" />
-      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -395,15 +431,15 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="options.lastSelected" value="fileTemplates" />
+    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat 7">
     <configuration default="false" name="Main" type="Application" factoryName="Application" temporary="true">
@@ -578,8 +614,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -588,17 +624,17 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39955357" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32924107" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33333334" sideWeight="0.6707589" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24439701" sideWeight="0.6737013" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3262987" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24386339" sideWeight="0.6707589" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32589287" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -675,19 +711,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="21" selection-start="1679" selection-end="1679" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="46" column="21" selection-start="1679" selection-end="1679" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="43" selection-start="768" selection-end="768" vertical-scroll-proportion="-11.7">
-          <folding />
-        </state>
-      </provider>
       <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
         <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="43" selection-start="768" selection-end="768" vertical-scroll-proportion="-11.7" />
       </provider>
       <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
         <state />
@@ -698,23 +730,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/appspot/rememberit/api/TagTree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="20" selection-start="342" selection-end="342" vertical-scroll-proportion="0.3025641">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="16" column="20" selection-start="342" selection-end="342" vertical-scroll-proportion="0.3025641" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/rememberit.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="3" selection-start="1664" selection-end="1664" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="76" column="3" selection-start="1664" selection-end="1664" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="54" selection-start="2601" selection-end="2601" vertical-scroll-proportion="0.64378697">
+        <state line="105" column="150" selection-start="5261" selection-end="5261" vertical-scroll-proportion="1.36">
           <folding />
         </state>
       </provider>
