@@ -14,6 +14,8 @@
     });
 
     Link.View = Backbone.View.extend({
+        tagName: "li",
+
         initialize: function() {
             console.log('Initializing Link View');
         },
@@ -22,9 +24,16 @@
             $(this.el).html(this.template(this.model.toJSON()));
             return this;
         }
+    },{
+        templateName: Link.name
     });
+    remIt.views.register(Link, Link.View);
 
     Link.ListView = Backbone.View.extend({
+        tagName: "ol",
+
+        className: "unstyled",
+
         initialize: function() {
             var _this = this;
             this.model.bind("reset", this.render, this);
@@ -41,5 +50,9 @@
             }, this);
             return this;
         }
+    },{
+        templateName: "linkListView"
     });
+    remIt.views.register(Link, Link.ListView);
+
 })(remIt.module("link"));

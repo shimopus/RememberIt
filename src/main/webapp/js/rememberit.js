@@ -43,23 +43,36 @@ var remIt = {
         };
     }(),
 
-    loadTemplates: function(callback) {
+    views: function() {
+        var viewsByModule = {};
 
-        var deferreds = [];
+        return {
+            register: function(module, view) {
+                var views = viewsByModule[module];
 
-        $.each(remIt.modulesName, function(index, moduleName) {
-            var module = remIt.module(moduleName);
-            if (module.View) {
-                deferreds.push($.get('/templates/' + moduleName + '.html', function(data) {
-                    module.View.prototype.template = _.template(data);
-                }, 'html'));
-            } else {
-                console.log("View for module " + moduleName + " is not found");
+                if (!views) {
+                    views = [];
+                    viewsByModule[module] = views;
+                }
+
+                views.push(view);
+            },
+
+            loadTemplates: function(callback) {
+                var deferreds = [];
+
+                _.each(_.keys(viewsByModule), function (module) {
+                    _.each(viewsByModule[module], function (view) {
+                        deferreds.push($.get('/templates/' + view.templateName + '.html', function (data) {
+                            view.prototype.template = _.template(data);
+                        }, 'html'));
+                    });
+                });
+
+                $.when.apply(null, deferreds).done(callback);
             }
-        });
-
-        $.when.apply(null, deferreds).done(callback);
-    }
+        }
+    }()
 };
 
 var RememberItRouter = Backbone.Router.extend({
@@ -86,7 +99,7 @@ var RememberItRouter = Backbone.Router.extend({
 });
 
 $(function() {
-    remIt.loadTemplates(function() {
+    remIt.views.loadTemplates(function() {
         remIt.app = new RememberItRouter();
         Backbone.history.start();
     })

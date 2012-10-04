@@ -2,17 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ced1744-76a9-4139-98d8-9c766cad7f98" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/api/LinksResource.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/dao/Link.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/dao/User.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/dao/memory/RememberItFacade.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/js/modules/link.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/templates/link.html" />
-      <change type="MOVED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\src\main\java\com\appspot\rememberit\dao\json\TagTreeNode.java" afterPath="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/dao/TagTreeNode.java" />
-      <change type="MOVED" beforePath="C:\Users\babinsky\Documents\GitHub\RememberIt\src\main\webapp\index.html" afterPath="$PROJECT_DIR$/src/main/webapp/template.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/api/TagTree.java" afterPath="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/api/TagTree.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/templates/linkListView.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/dao/memory/RememberItFacade.java" afterPath="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/dao/memory/RememberItFacade.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/index.html" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/modules/link.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/modules/link.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/rememberit.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/rememberit.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/templates/link.html" afterPath="$PROJECT_DIR$/src/main/webapp/templates/link.html" />
     </list>
     <ignored path="RememberIt.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -74,7 +69,7 @@
       <file leaf-file-name="rememberit.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/js/rememberit.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="79" column="31" selection-start="1809" selection-end="1809" vertical-scroll-proportion="0.0">
+            <state line="44" column="9" selection-start="857" selection-end="857" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -83,7 +78,7 @@
       <file leaf-file-name="link.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/js/modules/link.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="52" selection-start="468" selection-end="473" vertical-scroll-proportion="0.50086355">
+            <state line="53" column="28" selection-start="1332" selection-end="1332" vertical-scroll-proportion="0.93955094">
               <folding>
                 <element signature="e#0#43#0" expanded="false" />
               </folding>
@@ -91,50 +86,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LinksResource.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/appspot/rememberit/api/LinksResource.java">
+      <file leaf-file-name="linkListView.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/templates/linkListView.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="8" selection-start="575" selection-end="575" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RememberItFacade.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/appspot/rememberit/dao/memory/RememberItFacade.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="68" selection-start="368" selection-end="368" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="User.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/appspot/rememberit/dao/User.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="47" selection-start="254" selection-end="254" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Link.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/appspot/rememberit/dao/Link.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="24" selection-start="376" selection-end="387" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TagTree.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/appspot/rememberit/api/TagTree.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="41" selection-start="395" selection-end="432" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
@@ -143,7 +98,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="86" column="35" selection-start="3478" selection-end="3478" vertical-scroll-proportion="-19.423077">
+            <state line="58" column="0" selection-start="2294" selection-end="2294" vertical-scroll-proportion="-14.846154">
               <folding />
             </state>
           </provider>
@@ -152,7 +107,7 @@
       <file leaf-file-name="link.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/templates/link.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="8" selection-start="783" selection-end="783" vertical-scroll-proportion="-9.807693">
+            <state line="1" column="4" selection-start="32" selection-end="32" vertical-scroll-proportion="-0.65384614">
               <folding />
             </state>
           </provider>
@@ -171,7 +126,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/dao/Tag.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/dao/json/TagTreeNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/api/TagTreeService.java" />
@@ -181,12 +135,13 @@
         <option value="$PROJECT_DIR$/src/main/webapp/js/modules/linkList.js" />
         <option value="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/dao/Link.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/dao/User.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/dao/memory/RememberItFacade.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/api/LinksResource.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/templates/link.html" />
+        <option value="$PROJECT_DIR$/src/main/java/com/appspot/rememberit/dao/memory/RememberItFacade.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/index.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/templates/link.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/rememberit.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/modules/link.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/templates/linkListView.html" />
       </list>
     </option>
   </component>
@@ -812,7 +767,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -897,11 +852,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/com/sun/jersey/jersey-servlet/1.13/jersey-servlet-1.13.jar!/com/sun/jersey/spi/container/servlet/ServletContainer.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="0" selection-start="6463" selection-end="6463" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="46" column="21" selection-start="1679" selection-end="1679" vertical-scroll-proportion="0.0" />
@@ -956,9 +906,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="0" selection-start="2294" selection-end="2294" vertical-scroll-proportion="-14.846154">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/appspot/rememberit/dao/memory/RememberItFacade.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="68" selection-start="368" selection-end="368" vertical-scroll-proportion="0.0">
+        <state line="16" column="393" selection-start="997" selection-end="997" vertical-scroll-proportion="0.48056537">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -967,7 +924,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/appspot/rememberit/api/LinksResource.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="8" selection-start="575" selection-end="575" vertical-scroll-proportion="0.0">
+        <state line="21" column="44" selection-start="544" selection-end="544" vertical-scroll-proportion="0.5302245">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -976,35 +933,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/templates/link.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="8" selection-start="783" selection-end="783" vertical-scroll-proportion="-9.807693">
+        <state line="1" column="4" selection-start="32" selection-end="32" vertical-scroll-proportion="-0.65384614">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/lib/backbone.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="35" selection-start="3478" selection-end="3478" vertical-scroll-proportion="-19.423077">
+        <state line="1281" column="4" selection-start="47823" selection-end="47823" vertical-scroll-proportion="0.33333334">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/lib/jquery-1.8.2.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="22" selection-start="3019" selection-end="3019" vertical-scroll-proportion="0.0">
+        <state line="7706" column="17" selection-start="217015" selection-end="217015" vertical-scroll-proportion="-4.083039">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/rememberit.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="31" selection-start="1809" selection-end="1809" vertical-scroll-proportion="0.0">
+        <state line="44" column="9" selection-start="857" selection-end="857" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/templates/linkListView.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/modules/link.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="52" selection-start="468" selection-end="473" vertical-scroll-proportion="0.50086355">
+        <state line="53" column="28" selection-start="1332" selection-end="1332" vertical-scroll-proportion="0.93955094">
           <folding>
             <element signature="e#0#43#0" expanded="false" />
           </folding>
