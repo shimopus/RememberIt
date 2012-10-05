@@ -78,22 +78,22 @@
             if (!actionsBar) return;
 
             if (!li) {
-                if (actionsBar.hideTimeout) {
-                    clearTimeout(actionsBar.hideTimeout);
+                if (!actionsBar.hideTimeout) {
+                    var _this = this;
+                    actionsBar.hideTimeout = setTimeout(function () {
+                        actionsBar.animation = true;
+                        actionsBar.fadeOut("slow", function() {
+                            actionsBar.animation = false;
+                        });
+                        _this.$el.data("currentLi", null);
+                    }, 300);
                 }
-                var _this = this;
-                actionsBar.hideTimeout = setTimeout(function () {
-                    actionsBar.animation = true;
-                    actionsBar.fadeOut("slow", function() {
-                        actionsBar.animation = false;
-                    });
-                    _this.$el.data("currentLi", null);
-                }, 500);
             } else {
                 if (actionsBar.hideTimeout) {
                     clearTimeout(actionsBar.hideTimeout);
                     actionsBar.hideTimeout = null;
                 }
+
                 if (actionsBar.animation) {
                     return;
                 }
