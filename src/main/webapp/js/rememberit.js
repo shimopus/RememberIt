@@ -1,20 +1,27 @@
 $("#tagTreeContainer").jstree({
-        "themes" : {
-            "theme" : "classic",
-            "dots" : false,
-            "icons" : false
+        core: {
+            animation: false
         },
 
-        "json_data" : {
-            "ajax" : {
-                "url" : "/api/tags"
+        themes: {
+            theme: "classic",
+            dots: false,
+            icons: false
+        },
+
+        json_data: {
+            ajax: {
+                url : "/api/tags"
             }
         },
 
 
-        plugins : ["themes", "json_data" ]
+        plugins: ["themes", "json_data" ]
     }
-);
+)
+    .bind("loaded.jstree", function() {
+        $(this).find("ul:first").addClass("affix");
+    });
 
 Backbone.View.prototype.close = function () {
     console.log('Closing view ' + this);
@@ -32,14 +39,18 @@ var remIt = {
         var modules = {};
 
         return function(name) {
-            if (modules[name]) {
-                return modules[name];
+            var module = modules[name];
+
+            if (!module) {
+                remIt.modulesName.push(name);
+                module = {
+                    name: name
+                };
+                modules[name] = module;
             }
 
-            remIt.modulesName.push(name);
-            return modules[name] = {
-                "name": name
-            };
+
+            return module;
         };
     }(),
 

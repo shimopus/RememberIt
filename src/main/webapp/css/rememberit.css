@@ -9,8 +9,13 @@
     display: block;
 }
 
+.tags-container a.label {
+    margin: 0 4px 0 0;
+}
+
 .jstree a.label {
     color: white;
+    margin: 4px 0 0 0;
 }
 
 .label:hover {

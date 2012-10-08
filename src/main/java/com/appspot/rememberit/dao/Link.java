@@ -1,5 +1,6 @@
 package com.appspot.rememberit.dao;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -11,12 +12,14 @@ public class Link {
     String url;
     String title;
     String description;
+    List<Tag> tags;
 
-    public Link(String url, String title, String description) {
+    public Link(String url, String title, String description, List<Tag> tags) {
         this.id = UUID.randomUUID().toString();
         this.url = url;
         this.title = title;
         this.description = description;
+        this.tags = tags;
     }
 
     public String getId() {
@@ -49,5 +52,13 @@ public class Link {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 }

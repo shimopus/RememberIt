@@ -17,7 +17,6 @@
         tagName: "li",
 
         initialize: function() {
-            console.log('Initializing Link View');
         },
 
         render: function () {
@@ -38,7 +37,7 @@
             var _this = this;
             this.model.bind("reset", this.render, this);
             this.model.bind("add", function (link) {
-                $(_this.el).append(new Link.View({model:link}).render().el);
+                _this.renderLink(link);
             });
 
             $(document).on("mousemove", _.bind(this.document_mousemove, this));
@@ -47,11 +46,21 @@
         render: function () {
             this.initActionsBar();
 
-            var _this = this;
             _.each(this.model.models, function (link) {
-                $(_this.el).append(new Link.View({model:link}).render().el);
+                this.renderLink(link);
             }, this);
             return this;
+        },
+
+        renderLink: function(link) {
+            var linkEl = new Link.View({model:link}).render().$el;
+            this.$el.append(linkEl);
+            var tagsContainer = linkEl.find("div.tags-container");
+            if (tagsContainer.length) {
+                _.each(link.toJSON()["tags"], function(tag) {
+                    tagsContainer.append(new Link.TagView({model: tag}).render().$el.children().first());
+                }, this);
+            }
         },
 
         initActionsBar: function() {
@@ -113,5 +122,15 @@
         templateName: "linkListView"
     });
     remIt.views.register(Link, Link.ListView);
+
+    Link.TagView = Backbone.View.extend({
+        render: function () {
+            this.$el.html(this.template(this.model));
+            return this;
+        }
+    },{
+        templateName: "tagView"
+    });
+    remIt.views.register(Link, Link.TagView);
 
 })(remIt.module("link"));

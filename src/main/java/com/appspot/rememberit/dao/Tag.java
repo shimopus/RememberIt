@@ -6,9 +6,11 @@ package com.appspot.rememberit.dao;
  */
 public class Tag {
     private String title;
+    private String url;
 
     public Tag(String title) {
         this.title = title;
+        setUrl(TagUtils.getUrl(this));
     }
 
     public String getTitle() {
@@ -20,6 +22,10 @@ public class Tag {
     }
 
     public String getUrl() {
-        return "/tag/" + title;
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
