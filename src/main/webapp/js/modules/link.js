@@ -122,7 +122,11 @@
         },
 
         filterByTag: function (tag) {
-            this.model.
+            this.model.fetch({
+                data: {
+                    tag: tag
+                }
+            });
         }
     }, {
         templateName: "linkListView"

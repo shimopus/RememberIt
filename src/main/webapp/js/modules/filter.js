@@ -12,6 +12,10 @@
     Filter.View = Backbone.View.extend({
         className: "filter",
 
+        events: {
+            "click a.link": "clear"
+        },
+
         initialize: function(){
             currentFilterModel = this.model;
             this.model.on("change:tagLabel", this.render, this);
@@ -20,24 +24,19 @@
         },
 
         render: function () {
-            if (!Filter.clearHandler) {
-                Filter.clearHandler = _.bind(this.clear, this);
-            }
-
             var tagLabel = this.model.get("tagLabel");
             if (tagLabel) {
                 this.$el.html(this.template(this.model.toJSON()));
-
-                this.$el.on("click", "a.link", Filter.clearHandler);
             } else {
-                this.$el.off("click", "a.link", Filter.clearHandler);
                 this.$el.html("");
             }
             return this;
         },
 
         clear: function () {
-            this.model.set("tagLabel", null);
+            this.model.set({
+                tagLabel: null
+            });
         }
     }, {
         templateName: "filter"
@@ -50,7 +49,9 @@
         },
 
         filterByTag: function (tag) {
-            currentFilterModel.set("tagLabel", tag);
+            currentFilterModel.set({
+                "tagLabel": tag
+            });
         }
     });
 

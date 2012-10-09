@@ -4,9 +4,7 @@ import com.appspot.rememberit.dao.Link;
 import com.appspot.rememberit.dao.TagTreeNode;
 import com.appspot.rememberit.dao.memory.RememberItFacade;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -18,14 +16,19 @@ import java.util.List;
 public class LinksResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Link> getLinksList() {
+    public List<Link> getLinksList(@QueryParam("tag") String tag) {
+        System.out.println(tag);
+        if (tag != null) {
+            return new RememberItFacade().getLinksByUser(null).subList(1, 3);
+        }
         return new RememberItFacade().getLinksByUser(null);
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Link getLinkById() {
+    public Link getLinkById(@PathParam("id") String id) {
+        System.out.println(id);
         return new RememberItFacade().getLinksByUser(null).get(0);
     }
 }
