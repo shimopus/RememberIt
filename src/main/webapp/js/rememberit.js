@@ -106,6 +106,9 @@ var RememberItRouter = Backbone.Router.extend({
                 $("#linksContainer").html(linksView.el);
             }
         });
+
+        var Search = remIt.module("search");
+        $("#searchContainer").html(new Search.View().render().$el);
     }
 });
 
