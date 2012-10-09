@@ -62,15 +62,7 @@ var remIt = {
 };
 
 var RememberItRouter = Backbone.Router.extend({
-
     initialize: function () {
-    },
-
-    routes: {
-        "": "home"
-    },
-
-    home: function () {
         var Search = remIt.module("search");
         $("#searchContainer").html(new Search.View().render().$el);
 
@@ -80,15 +72,17 @@ var RememberItRouter = Backbone.Router.extend({
         }).render().$el);
 
         var Link = remIt.module("link");
-        var linksView = new Link.ListView({
+        this.linksView = new Link.ListView({
             model: new Link.Collection()
         });
-        linksView.model.fetch({
-            success: function () {
-                linksView.render();
-                $("#linksContainer").html(linksView.el);
-            }
-        });
+        this.linksView.render();
+        $("#linksContainer").html(this.linksView.el);
+//        linksView.model.fetch({
+//            success: function () {
+//                linksView.render();
+//                $("#linksContainer").html(linksView.el);
+//            }
+//        });
 
         var AddLinkPane = remIt.module("addLinkPane");
         $("#addLinkContainer").html(new AddLinkPane.View().render().$el);
@@ -102,6 +96,14 @@ var RememberItRouter = Backbone.Router.extend({
                 tagTreeView.render();
             }
         });
+    },
+
+    routes: {
+        "": "home"
+    },
+
+    home: function () {
+        this.linksView.model.fetch();
     }
 });
 
