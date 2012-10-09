@@ -130,6 +130,8 @@ $.widget( "ui.autocomplete", {
 		this._initSource();
 		this.menu = $( "<ul></ul>" )
 			.addClass( "ui-autocomplete" )
+            .addClass( "typeahead" ) //modified
+            .addClass( "dropdown-menu" ) //modified
 			.appendTo( $( this.options.appendTo || "body", doc )[0] )
 			// prevent the close-on-blur in case of a "slow" click on the menu (long mousedown)
 			.mousedown(function( event ) {
@@ -518,6 +520,7 @@ $.widget("ui.menu", {
 			}
 		}
 		this.active = item.eq(0)
+            .addClass("active") //modified
 			.children("a")
 				.addClass("ui-state-hover")
 				.attr("id", "ui-active-menuitem")
@@ -528,7 +531,9 @@ $.widget("ui.menu", {
 	deactivate: function() {
 		if (!this.active) { return; }
 
-		this.active.children("a")
+		this.active
+            .removeClass("active") //modified
+            .children("a")
 			.removeClass("ui-state-hover")
 			.removeAttr("id");
 		this._trigger("blur");

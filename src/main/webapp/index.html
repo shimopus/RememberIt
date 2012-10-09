@@ -5,7 +5,6 @@
     <title>RememberIt</title>
 
     <link rel="stylesheet" href="css/lib/bootstrap.css">
-    <link rel="stylesheet" href="css/lib/jquery.ui.autocomplete.css">
     <link rel="stylesheet" href="css/lib/jquery.ui.core.css">
     <link rel="stylesheet" href="css/rememberit.css">
 </head>
@@ -17,14 +16,7 @@
         </div>
         <div class="span8 center">
             <h1>RememberIt - remember it all<small> for future</small></h1>
-            <form action="addLink" class="form-inline">
-                <button class="btn btn-large btn-primary" type="button" title="Add Link">Add Link</button>
-                <label class="label-add-link">
-                    <input class="input-block-level" type="text"
-                           placeholder="Type or past URL hear or just drug it hear and drop"
-                           title="Type or past URL hear or just drug it hear and drop"/>
-                </label>
-            </form>
+            <div id="addLinkContainer"></div>
         </div>
         <div>
             <span class="text-info">You are
@@ -71,5 +63,8 @@
 
     <script src="js/modules/link.js" type="text/javascript"></script>
     <script src="js/modules/search.js" type="text/javascript"></script>
+    <script src="js/modules/tagtree.js" type="text/javascript"></script>
+    <script src="js/modules/addLinkPane.js" type="text/javascript"></script>
+    <script src="js/modules/filter.js" type="text/javascript"></script>
 </body>
 </html>

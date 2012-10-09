@@ -1,28 +1,3 @@
-$("#tagTreeContainer").jstree({
-        core: {
-            animation: false
-        },
-
-        themes: {
-            theme: "classic",
-            dots: false,
-            icons: false
-        },
-
-        json_data: {
-            ajax: {
-                url : "/api/tags"
-            }
-        },
-
-
-        plugins: ["themes", "json_data" ]
-    }
-)
-    .bind("loaded.jstree", function() {
-        $(this).find("ul:first").addClass("affix");
-    });
-
 Backbone.View.prototype.close = function () {
     console.log('Closing view ' + this);
     if (this.beforeClose) {
@@ -35,10 +10,10 @@ Backbone.View.prototype.close = function () {
 var remIt = {
     modulesName: [],
 
-    module: function() {
+    module: (function () {
         var modules = {};
 
-        return function(name) {
+        return function (name) {
             var module = modules[name];
 
             if (!module) {
@@ -52,13 +27,13 @@ var remIt = {
 
             return module;
         };
-    }(),
+    })(),
 
-    views: function() {
+    views: function () {
         var viewsByModule = {};
 
         return {
-            register: function(module, view) {
+            register: function (module, view) {
                 var views = viewsByModule[module];
 
                 if (!views) {
@@ -69,7 +44,7 @@ var remIt = {
                 views.push(view);
             },
 
-            loadTemplates: function(callback) {
+            loadTemplates: function (callback) {
                 var deferreds = [];
 
                 _.each(_.keys(viewsByModule), function (module) {
@@ -88,14 +63,22 @@ var remIt = {
 
 var RememberItRouter = Backbone.Router.extend({
 
-    initialize: function() {
+    initialize: function () {
     },
 
     routes: {
-        "" : "home"
+        "": "home"
     },
 
-    home: function(){
+    home: function () {
+        var Search = remIt.module("search");
+        $("#searchContainer").html(new Search.View().render().$el);
+
+        var Filter = remIt.module("filter");
+        $("#searchContainer").append(new Filter.View({
+            model: new Filter.Model()
+        }).render().$el);
+
         var Link = remIt.module("link");
         var linksView = new Link.ListView({
             model: new Link.Collection()
@@ -107,13 +90,23 @@ var RememberItRouter = Backbone.Router.extend({
             }
         });
 
-        var Search = remIt.module("search");
-        $("#searchContainer").html(new Search.View().render().$el);
+        var AddLinkPane = remIt.module("addLinkPane");
+        $("#addLinkContainer").html(new AddLinkPane.View().render().$el);
+
+        var TagTree = remIt.module("tagtree");
+        var tagTreeView = new TagTree.View({
+            model: new TagTree.Collection()
+        });
+        tagTreeView.model.fetch({
+            success: function () {
+                tagTreeView.render();
+            }
+        });
     }
 });
 
-$(function() {
-    remIt.views.loadTemplates(function() {
+$(function () {
+    remIt.views.loadTemplates(function () {
         remIt.app = new RememberItRouter();
         Backbone.history.start();
     })

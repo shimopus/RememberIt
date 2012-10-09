@@ -71,3 +71,12 @@
 .input-append {
     width: 60%;
 }
+
+.filter {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+}
+
+.filter .label {
+    margin: 0 4px 0 0;
+}

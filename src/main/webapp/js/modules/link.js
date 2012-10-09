@@ -2,7 +2,7 @@
  * User: Babinsky
  * Date: 04.10.12
  */
-(function(Link) {
+(function (Link) {
     Link.Model = Backbone.Model.extend({
         urlRoot: "/api/links"
     });
@@ -16,14 +16,14 @@
     Link.View = Backbone.View.extend({
         tagName: "li",
 
-        initialize: function() {
+        initialize: function () {
         },
 
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
             return this;
         }
-    },{
+    }, {
         templateName: Link.name
     });
     remIt.views.register(Link, Link.View);
@@ -33,12 +33,14 @@
 
         className: "unstyled",
 
-        initialize: function() {
+        initialize: function () {
             var _this = this;
             this.model.bind("reset", this.render, this);
             this.model.bind("add", function (link) {
                 _this.renderLink(link);
             });
+
+            remIt.module("filter").router.on("route:filterByTag", this.filterByTag, this);
 
             $(document).on("mousemove", _.bind(this.document_mousemove, this));
         },
@@ -52,23 +54,23 @@
             return this;
         },
 
-        renderLink: function(link) {
-            var linkEl = new Link.View({model:link}).render().$el;
+        renderLink: function (link) {
+            var linkEl = new Link.View({model: link}).render().$el;
             this.$el.append(linkEl);
             var tagsContainer = linkEl.find("div.tags-container");
             if (tagsContainer.length) {
-                _.each(link.toJSON()["tags"], function(tag) {
+                _.each(link.toJSON()["tags"], function (tag) {
                     tagsContainer.append(new Link.TagView({model: tag}).render().$el.children().first());
                 }, this);
             }
         },
 
-        initActionsBar: function() {
+        initActionsBar: function () {
             this.$el.html(this.template());
             this.$el.data("actionsBar", this.$el.find("div.actions"));
         },
 
-        document_mousemove: function(event) {
+        document_mousemove: function (event) {
             var li = $(event.target);
             if (!li.hasClass("link-container")) {
                 li = li.parents("li.link-container");
@@ -81,7 +83,7 @@
             this.show_hideActionsBar(li);
         },
 
-        show_hideActionsBar: function(li) {
+        show_hideActionsBar: function (li) {
             var actionsBar = this.$el.data("actionsBar");
 
             if (!actionsBar) return;
@@ -91,7 +93,7 @@
                     var _this = this;
                     actionsBar.hideTimeout = setTimeout(function () {
                         actionsBar.animation = true;
-                        actionsBar.fadeOut("slow", function() {
+                        actionsBar.fadeOut("slow", function () {
                             actionsBar.animation = false;
                         });
                         _this.$el.data("currentLi", null);
@@ -117,8 +119,12 @@
                     this.$el.data("currentLi", li);
                 }
             }
+        },
+
+        filterByTag: function (tag) {
+            this.model.
         }
-    },{
+    }, {
         templateName: "linkListView"
     });
     remIt.views.register(Link, Link.ListView);
@@ -128,7 +134,7 @@
             this.$el.html(this.template(this.model));
             return this;
         }
-    },{
+    }, {
         templateName: "tagView"
     });
     remIt.views.register(Link, Link.TagView);

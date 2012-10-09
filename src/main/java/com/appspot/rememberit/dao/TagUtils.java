@@ -6,6 +6,6 @@ package com.appspot.rememberit.dao;
  */
 public class TagUtils {
     public static String getUrl(Tag tag) {
-        return "/tag/" + tag.getTitle();
+        return "#tag/" + tag.getTitle();
     }
 }
