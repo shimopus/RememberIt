@@ -70,8 +70,14 @@
             if (link) {
                 this.dialog.model.set({
                     stateHidden: false,
-                    link: link
-                })
+                    id: "abcd"
+                });
+                var _this = this;
+                this.dialog.model.fetch({
+                    success: function() {
+                        console.log(_this.dialog.model);
+                    }
+                });
             }
         }
     }, {
