@@ -1,6 +1,5 @@
 /**
- * Created with IntelliJ IDEA.
- * User: administrator
+ * User: Babinsky
  * Date: 09.10.12
  * Time: 22:54
  * To change this template use File | Settings | File Templates.
@@ -10,7 +9,11 @@
     LinkDialog.Model = Backbone.Model.extend({
         urlRoot: "/api/links",
 
-        stateHidden: true
+        defaults: {
+            stateHidden: true,
+            link: null,
+            operation: "Save"
+        }
     });
 
     LinkDialog.View = Backbone.View.extend({
@@ -19,12 +22,20 @@
         },
 
         render: function () {
-            $("body").append(this.template(this.model.toJSON()).$el.find("*:first"));
+            var dialog = $(this.template(this.model.toJSON()));
+            var _this = this;
+            dialog.on("hidden", function () {
+                _this.model.set({
+                    stateHidden: true
+                });
+            });
+            $("body").append(dialog);
+            return this;
         },
 
         show_hideDialog: function () {
             var stateHidden = this.model.get("stateHidden");
-            if (stateHidden) {
+            if (!stateHidden) {
                 $("#addLinkDialog").modal("show");
             } else {
                 $("#addLinkDialog").modal("hide");

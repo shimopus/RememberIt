@@ -17,7 +17,6 @@ public class LinksResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Link> getLinksList(@QueryParam("tag") String tag) {
-        System.out.println(tag);
         if (tag != null) {
             return new RememberItFacade().getLinksByUser(null).subList(1, 3);
         }

@@ -80,3 +80,16 @@
 .filter .label {
     margin: 0 4px 0 0;
 }
+
+.addLinkError {
+    position: absolute;
+    margin-top: 8px;
+}
+
+.right {
+    float: right;
+}
+
+.url {
+    margin: 0 0 0 10px;
+}

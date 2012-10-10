@@ -11,7 +11,8 @@
         action: "/addLink",
 
         events: {
-            "click #addLinkButton": "addLink"
+            "click #addLinkButton": "addLink",
+            "focus #url": "inputFocus"
         },
 
         render: function () {
@@ -23,15 +24,54 @@
         addLink: function () {
             var link = this.$el.find("input").val();
             if (!link) {
-                this.$el.addClass("error").
-                    find("#error").
-                    removeClass("hide");
-                var _this = this;
-                setTimeout(function () {
-                    _this.$el.removeClass("error").
-                        find("#error").
-                        addClass("hide");
-                }, 5000);
+                this.showError();
+                this.errorTimeout = setTimeout(_.bind(this.hideError, this), 5000);
+            } else {
+                this.showDialog(link);
+            }
+        },
+
+        showError: function () {
+            var input = this.$el.find("#url");
+            var error = input.attr("data-errorplaceholder");
+            var placeholder = input.attr("placeholder");
+
+            this.$el.addClass("error");
+            input.attr("placeholder", error).attr("data-errorplaceholder", placeholder);
+        },
+
+        hideError: function () {
+            var input = this.$el.find("#url");
+            var placeholder = input.attr("data-errorplaceholder");
+            var error = input.attr("placeholder");
+
+            this.$el.removeClass("error");
+            input.attr("placeholder", placeholder).attr("data-errorplaceholder", error);
+
+            this.errorTimeout = null;
+        },
+
+        inputFocus: function () {
+            if (this.errorTimeout) {
+                clearTimeout(this.errorTimeout);
+                this.hideError();
+            }
+        },
+
+        showDialog: function (link) {
+            if (!this.dialog) {
+                var LinkDialog = remIt.module("linkDialog");
+                this.dialog = new LinkDialog.View({
+                    model: new LinkDialog.Model()
+                });
+                this.dialog.render();
+            }
+
+            if (link) {
+                this.dialog.model.set({
+                    stateHidden: false,
+                    link: link
+                })
             }
         }
     }, {

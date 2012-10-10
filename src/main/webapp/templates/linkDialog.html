@@ -1,8 +1,44 @@
-<div id="addLinkDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addLinkTitle" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 id="addLinkTitle">It is header</h4>
-    </div>
-    <div class="modal-body">It is body</div>
-    <div class="modal-footer">It is footer</div>
+<div id="addLinkDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addLinkTitle"
+     aria-hidden="true">
+    <form action="/links" class="modal-form">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 id="addLinkTitle"><%= operation %> a Link</h4>
+        </div>
+        <div class="modal-body">
+
+            <div class="row-fluid">
+                <div class="span4">
+                    <label class="checkbox">
+                        <input type="checkbox" value="">
+                        No Image
+                    </label>
+
+                    <div class="link-image img-rounded img-polaroid">
+                        <img src="img/ya.jpg"/>
+                    </div>
+                    <label for="tags">Tags</label>
+                    <input type="text" class="input-medium" id="tags" placeholder="Press enter to add"
+                           title="Press enter to add"/>
+                </div>
+                <div class="span8">
+                    <div class="form-inline">
+                        <label for="linkUrl">URL</label>
+                        <input id="linkUrl" type="text" class="hide" value="yandex.ru"/>
+                        <span class="muted url">yandex.ru</span>
+                        <button class="btn-link right" type="button">Edit</button>
+                    </div>
+                    <label for="title">Title</label>
+                    <input class="input-xlarge" type="text" id="title"/>
+                    <label for="description">Description</label>
+                    <textarea class="input-xlarge" rows="6" cols="100" id="description"></textarea>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="reset" data-dismiss="modal" aria-hidden="true" class="btn">Cancel</button>
+            <button class="btn btn-primary" type="submit"><%= operation %></button>
+        </div>
+    </form>
 </div>
