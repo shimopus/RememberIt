@@ -151,14 +151,10 @@
 
                     this.dialog.model.set(link);
 
-                    var _this = this;
-                    this.dialog.model.fetch({
-                        success: function() {
-                            _this.dialog.model.set({
-                                stateHidden: false,
-                                operation: "Edit"
-                            });
-                        }
+                    this.dialog.model.set({
+                        link: link,
+                        stateHidden: false,
+                        operation: "Edit"
                     });
                 }
             }

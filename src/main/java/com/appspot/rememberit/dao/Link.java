@@ -14,6 +14,10 @@ public class Link {
     String description;
     List<Tag> tags;
 
+    //For json create
+    public Link() {
+    }
+
     public Link(String url, String title, String description, List<Tag> tags) {
         this.id = UUID.randomUUID().toString();
         this.url = url;

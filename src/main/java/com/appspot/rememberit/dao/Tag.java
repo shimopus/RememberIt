@@ -8,6 +8,9 @@ public class Tag {
     private String title;
     private String url;
 
+    public Tag() {
+    }
+
     public Tag(String title) {
         this.title = title;
         setUrl(TagUtils.getUrl(this));

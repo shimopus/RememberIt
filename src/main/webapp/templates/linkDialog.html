@@ -24,10 +24,10 @@
                 </div>
                 <div class="span8">
                     <div class="form-inline">
-                        <label for="linkUrl">URL</label>
-                        <input name="linkUrl" id="linkUrl" type="text" class="hide" value="<%= url %>"/>
-                        <span class="muted url"><%= url %></span>
-                        <button class="btn-link right" type="button">Edit</button>
+                        <label for="linkUrlEdit">URL</label>
+                        <input name="linkUrl" id="linkUrlEdit" type="text" class="hide" value="<%= url %>"/>
+                        <span class="muted url" id="linkUrl"><%= url %></span>
+                        <button class="btn-link right" type="button" id="btnEditUrl">Edit</button>
                     </div>
                     <label for="title">Title</label>
                     <input class="input-xlarge" type="text" id="title" name="title" value="<%= title %>"/>

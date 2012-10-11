@@ -18,16 +18,22 @@ public class LinksResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Link> getLinksList(@QueryParam("tag") String tag) {
         if (tag != null) {
-            return new RememberItFacade().getLinksByUser(null).subList(1, 3);
+            return RememberItFacade.getInstance().getLinksByUser(null).subList(1, 3);
         }
-        return new RememberItFacade().getLinksByUser(null);
+        return RememberItFacade.getInstance().getLinksByUser(null);
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Link getLinkById(@PathParam("id") String id) {
-        System.out.println(id);
-        return new RememberItFacade().getLinksByUser(null).get(0);
+        return RememberItFacade.getInstance().getLinksByUser(null).get(0);
+    }
+
+    @PUT
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void updateLinkById(@PathParam("id") String id, Link link) {
+        RememberItFacade.getInstance().saveLink(id, link);
     }
 }
