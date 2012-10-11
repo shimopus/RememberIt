@@ -64,21 +64,14 @@
                 this.dialog = new LinkDialog.View({
                     model: new LinkDialog.Model()
                 });
-                this.dialog.render();
             }
 
-            if (link) {
-                this.dialog.model.set({
-                    stateHidden: false,
-                    id: "abcd"
-                });
-                var _this = this;
-                this.dialog.model.fetch({
-                    success: function() {
-                        console.log(_this.dialog.model);
-                    }
-                });
-            }
+            this.dialog.model.set({
+                url: link,
+                title: link,
+                stateHidden: false,
+                operation: "Add"
+            });
         }
     }, {
         templateName: AddLinkPane.name

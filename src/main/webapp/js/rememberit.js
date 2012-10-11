@@ -1,5 +1,4 @@
 Backbone.View.prototype.close = function () {
-    console.log('Closing view ' + this);
     if (this.beforeClose) {
         this.beforeClose();
     }
@@ -23,7 +22,6 @@ var remIt = {
                 };
                 modules[name] = module;
             }
-
 
             return module;
         };
@@ -77,12 +75,6 @@ var RememberItRouter = Backbone.Router.extend({
         });
         this.linksView.render();
         $("#linksContainer").html(this.linksView.el);
-//        linksView.model.fetch({
-//            success: function () {
-//                linksView.render();
-//                $("#linksContainer").html(linksView.el);
-//            }
-//        });
 
         var AddLinkPane = remIt.module("addLinkPane");
         $("#addLinkContainer").html(new AddLinkPane.View().render().$el);

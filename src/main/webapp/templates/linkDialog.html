@@ -10,28 +10,29 @@
             <div class="row-fluid">
                 <div class="span4">
                     <label class="checkbox">
-                        <input type="checkbox" value="">
+                        <input name="noimage" type="checkbox" />
                         No Image
                     </label>
 
                     <div class="link-image img-rounded img-polaroid">
-                        <img src="img/ya.jpg"/>
+                        <img src="img/ya.jpg" alt="<%= url %>"/>
                     </div>
                     <label for="tags">Tags</label>
-                    <input type="text" class="input-medium" id="tags" placeholder="Press enter to add"
+                    <input type="text" class="input-medium" id="tags" name="tags" placeholder="Press enter to add"
                            title="Press enter to add"/>
+                    <div class="tags-container"></div>
                 </div>
                 <div class="span8">
                     <div class="form-inline">
                         <label for="linkUrl">URL</label>
-                        <input id="linkUrl" type="text" class="hide" value="yandex.ru"/>
-                        <span class="muted url">yandex.ru</span>
+                        <input name="linkUrl" id="linkUrl" type="text" class="hide" value="<%= url %>"/>
+                        <span class="muted url"><%= url %></span>
                         <button class="btn-link right" type="button">Edit</button>
                     </div>
                     <label for="title">Title</label>
-                    <input class="input-xlarge" type="text" id="title"/>
+                    <input class="input-xlarge" type="text" id="title" name="title" value="<%= title %>"/>
                     <label for="description">Description</label>
-                    <textarea class="input-xlarge" rows="6" cols="100" id="description"></textarea>
+                    <textarea class="input-xlarge" rows="6" cols="100" id="description" name="description"><%= description %></textarea>
                 </div>
             </div>
 

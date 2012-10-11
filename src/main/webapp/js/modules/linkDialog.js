@@ -5,15 +5,13 @@
  * To change this template use File | Settings | File Templates.
  */
 (function (LinkDialog) {
+    var Link = remIt.module("link");
 
-    LinkDialog.Model = Backbone.Model.extend({
-        urlRoot: "/api/links",
-
-        defaults: {
+    LinkDialog.Model = Link.Model.extend({
+        /*defaults: {
             stateHidden: true,
-            link: null,
             operation: "Save"
-        }
+        }*/
     });
 
     LinkDialog.View = Backbone.View.extend({
@@ -30,16 +28,29 @@
                 });
             });
             $("body").append(dialog);
+
+            var tagsContainer = dialog.find("div.tags-container");
+            if (tagsContainer.length) {
+                tagsContainer.append(new (remIt.module("tag")).TagListView({model: this.model.toJSON().tags}).render().$el.children());
+            }
+
+            this.$el = dialog;
             return this;
         },
 
         show_hideDialog: function () {
             var stateHidden = this.model.get("stateHidden");
             if (!stateHidden) {
+                this.render();
                 $("#addLinkDialog").modal("show");
             } else {
                 $("#addLinkDialog").modal("hide");
+                this.close();
             }
+        },
+
+        beforeClose: function() {
+            this.$el.remove();
         }
     }, {
         templateName: "linkDialog"

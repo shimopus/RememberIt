@@ -4,7 +4,14 @@
  */
 (function (Link) {
     Link.Model = Backbone.Model.extend({
-        urlRoot: "/api/links"
+        urlRoot: "/api/links",
+
+        defaults: {
+            url: "",
+            title: "",
+            description: "",
+            tags: []
+        }
     });
 
     Link.Collection = Backbone.Collection.extend({
@@ -33,6 +40,10 @@
 
         className: "unstyled",
 
+        events: {
+            "click #editLink": "editLink"
+        },
+
         initialize: function () {
             var _this = this;
             this.model.bind("reset", this.render, this);
@@ -59,9 +70,7 @@
             this.$el.append(linkEl);
             var tagsContainer = linkEl.find("div.tags-container");
             if (tagsContainer.length) {
-                _.each(link.toJSON()["tags"], function (tag) {
-                    tagsContainer.append(new Link.TagView({model: tag}).render().$el.children().first());
-                }, this);
+                tagsContainer.append(new (remIt.module("tag")).TagListView({model: link.get("tags")}).render().$el.children());
             }
         },
 
@@ -110,8 +119,6 @@
                 }
 
                 if (!this.$el.data("currentLi") || li[0] !== this.$el.data("currentLi")[0]) {
-                    var linkId = li.find("section").id;
-
                     li.prepend(actionsBar);
 
                     actionsBar.show();
@@ -127,20 +134,38 @@
                     tag: tag
                 }
             });
+        },
+
+        editLink: function () {
+            var li = this.$el.data("currentLi");
+            if (li) {
+                var link = this.model.get(li.find("section").attr("id"));
+
+                if (link) {
+                    if (!this.dialog) {
+                        var LinkDialog = remIt.module("linkDialog");
+                        this.dialog = new LinkDialog.View({
+                            model: new LinkDialog.Model()
+                        });
+                    }
+
+                    this.dialog.model.set(link);
+
+                    var _this = this;
+                    this.dialog.model.fetch({
+                        success: function() {
+                            _this.dialog.model.set({
+                                stateHidden: false,
+                                operation: "Edit"
+                            });
+                        }
+                    });
+                }
+            }
         }
     }, {
         templateName: "linkListView"
     });
     remIt.views.register(Link, Link.ListView);
-
-    Link.TagView = Backbone.View.extend({
-        render: function () {
-            this.$el.html(this.template(this.model));
-            return this;
-        }
-    }, {
-        templateName: "tagView"
-    });
-    remIt.views.register(Link, Link.TagView);
 
 })(remIt.module("link"));
