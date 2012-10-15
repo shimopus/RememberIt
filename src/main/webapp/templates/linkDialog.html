@@ -1,5 +1,5 @@
 <div id="addLinkDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addLinkTitle"
-     aria-hidden="true">
+     aria-hidden="true" data-backdrop="static">
     <form action="/links" class="modal-form">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -25,7 +25,7 @@
                 <div class="span8">
                     <div class="form-inline">
                         <label for="linkUrlEdit">URL</label>
-                        <input name="linkUrl" id="linkUrlEdit" type="text" class="hide" value="<%= url %>"/>
+                        <input name="url" id="url" type="text" class="hide" value="<%= url %>"/>
                         <span class="muted url" id="linkUrl"><%= url %></span>
                         <button class="btn-link right" type="button" id="btnEditUrl">Edit</button>
                     </div>

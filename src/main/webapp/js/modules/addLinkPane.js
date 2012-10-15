@@ -28,6 +28,7 @@
                 this.errorTimeout = setTimeout(_.bind(this.hideError, this), 5000);
             } else {
                 this.showDialog(link);
+                this.$el.find("input").val("");
             }
         },
 
@@ -76,6 +77,6 @@
     }, {
         templateName: AddLinkPane.name
     });
-    remIt.views.register(AddLinkPane, AddLinkPane.View);
+    remIt.views.register(AddLinkPane.View);
 
 })(remIt.module("addLinkPane"));

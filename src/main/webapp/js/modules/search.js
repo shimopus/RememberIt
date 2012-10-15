@@ -39,6 +39,6 @@
     }, {
         templateName: Search.name
     });
-    remIt.views.register(Search, Search.View);
+    remIt.views.register(Search.View);
 
 })(remIt.module("search"));

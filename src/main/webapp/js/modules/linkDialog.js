@@ -52,7 +52,7 @@
         },
 
         openEditUrl: function () {
-            this.$el.find("#linkUrlEdit").removeClass("hide");
+            this.$el.find("#url").removeClass("hide");
             this.$el.find("#linkUrl").addClass("hide");
             this.$el.find("#btnEditUrl").addClass("hide");
         },
@@ -101,25 +101,43 @@
         },
 
         saveOrEdit: function (event) {
-            console.log("save " + this.model.get("operation"));
+            var form = this.$el.find("form");
+            var isAdd = false;
             var link = this.model.get("link");
-            if (link) {
-                link.set({
-                    title: this.model.get("title"),
-                    tags: this.model.get("tags"),
-                    url: this.model.get("url"),
-                    description: this.model.get("description")
-                }, {
-                    silent: true
-                })
+            if (!link) {
+                link = new Link.Model();
+                isAdd = true;
             }
 
-            link.save();
-            event.preventDefault();
+            link.set({
+                title: form.find("#title").val(),
+                tags: this.model.get("tags"),
+                url: form.find("#url").val(),
+                description: form.find("#description").val()
+            });
+
+            var _this = this;
+            link.save({},{
+                success: function () {
+                    if (isAdd) {
+                        remIt.trigger("linkDialog:add", link);
+                    }
+                    _this.model.set({
+                        stateHidden: true
+                    });
+                },
+
+                error: function () {
+                    var Alert = remIt.module("alert");
+                    Alert.View.showAlert("We can't save this link. Something is wrong. Please try to save later.");
+                }
+            });
+
+            return false;
         }
     }, {
         templateName: "linkDialog"
     });
-    remIt.views.register(LinkDialog, LinkDialog.View);
+    remIt.views.register(LinkDialog.View);
 
 })(remIt.module("linkDialog"));

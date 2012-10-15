@@ -36,4 +36,10 @@ public class LinksResource {
     public void updateLinkById(@PathParam("id") String id, Link link) {
         RememberItFacade.getInstance().saveLink(id, link);
     }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Link addLinkById(Link link) {
+        return RememberItFacade.getInstance().addLink(link);
+    }
 }

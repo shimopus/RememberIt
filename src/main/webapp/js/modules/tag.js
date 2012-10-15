@@ -11,7 +11,7 @@
     }, {
         templateName: "tagView"
     });
-    remIt.views.register(Tag, Tag.TagView);
+    remIt.views.register(Tag.TagView);
 
     Tag.TagListView = Backbone.View.extend({
         render: function () {

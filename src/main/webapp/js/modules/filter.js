@@ -41,7 +41,7 @@
     }, {
         templateName: "filter"
     });
-    remIt.views.register(Filter, Filter.View);
+    remIt.views.register(Filter.View);
 
     Filter.Router = Backbone.Router.extend({
         routes: {

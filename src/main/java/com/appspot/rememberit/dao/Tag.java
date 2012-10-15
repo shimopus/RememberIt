@@ -25,6 +25,9 @@ public class Tag {
     }
 
     public String getUrl() {
+        if (url == null) {
+            url = TagUtils.getUrl(this);
+        }
         return url;
     }
 

@@ -28,29 +28,20 @@ var remIt = {
     })(),
 
     views: function () {
-        var viewsByModule = {};
+        var viewsByModule = [];
 
         return {
-            register: function (module, view) {
-                var views = viewsByModule[module];
-
-                if (!views) {
-                    views = [];
-                    viewsByModule[module] = views;
-                }
-
-                views.push(view);
+            register: function (view) {
+                viewsByModule.push(view);
             },
 
             loadTemplates: function (callback) {
                 var deferreds = [];
 
-                _.each(_.keys(viewsByModule), function (module) {
-                    _.each(viewsByModule[module], function (view) {
-                        deferreds.push($.get('/templates/' + view.templateName + '.html', function (data) {
-                            view.prototype.template = _.template(data);
-                        }, 'html'));
-                    });
+                _.each(viewsByModule, function (view) {
+                    deferreds.push($.get('/templates/' + view.templateName + '.html', function (data) {
+                        view.prototype.template = _.template(data);
+                    }, 'html'));
                 });
 
                 $.when.apply(null, deferreds).done(callback);
@@ -58,6 +49,8 @@ var remIt = {
         }
     }()
 };
+
+_.extend(remIt, Backbone.Events);
 
 var RememberItRouter = Backbone.Router.extend({
     initialize: function () {

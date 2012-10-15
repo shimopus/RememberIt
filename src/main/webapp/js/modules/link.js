@@ -21,8 +21,6 @@
     });
 
     Link.View = Backbone.View.extend({
-        tagName: "li",
-
         initialize: function () {
         },
 
@@ -33,7 +31,7 @@
     }, {
         templateName: Link.name
     });
-    remIt.views.register(Link, Link.View);
+    remIt.views.register(Link.View);
 
     Link.ListView = Backbone.View.extend({
         tagName: "ol",
@@ -45,13 +43,23 @@
         },
 
         initialize: function () {
-            var _this = this;
-            this.model.bind("reset", this.render, this);
-            this.model.bind("add", function (link) {
-                _this.renderLink(link);
-            });
+            this.model.on("reset", function() {
+                this.render();
+            }, this);
+
+            this.model.on("change", function(link) {
+                this.updateLink(link);
+                this.focusLink(link);
+            }, this);
+
+            this.model.on("add", function(link) {
+                this.$el.append(this.renderLink(link));
+                this.focusLink(link);
+            }, this);
 
             remIt.module("filter").router.on("route:filterByTag", this.filterByTag, this);
+
+            remIt.on("linkDialog:add", this.refreshList, this);
 
             $(document).on("mousemove", _.bind(this.document_mousemove, this));
         },
@@ -60,18 +68,26 @@
             this.initActionsBar();
 
             _.each(this.model.models, function (link) {
-                this.renderLink(link);
+                this.$el.append(this.renderLink(link));
             }, this);
             return this;
         },
 
         renderLink: function (link) {
-            var linkEl = new Link.View({model: link}).render().$el;
-            this.$el.append(linkEl);
+            var linkEl = new Link.View({model: link}).render().$el.find("*:first");
             var tagsContainer = linkEl.find("div.tags-container");
             if (tagsContainer.length) {
                 tagsContainer.append(new (remIt.module("tag")).TagListView({model: link.get("tags")}).render().$el.children());
             }
+
+            return linkEl;
+        },
+
+        updateLink: function (link) {
+            console.log("update");
+            var linkEl = this.renderLink(link);
+            var id = link.get("id");
+            this.$el.find("section#" + id).html(linkEl.find("section"));
         },
 
         initActionsBar: function () {
@@ -158,10 +174,28 @@
                     });
                 }
             }
+        },
+
+        refreshList: function(link) {
+            this.model.add(link);
+        },
+
+        focusLink: function (link) {
+            this.$el.find("section#" + link.get("id") + " > a").focus();
+            var $el = this.$el;
+            setTimeout(function () {
+                $el.find("section#" + link.get("id") + "").parent().
+                    animate({
+                        opacity:0.2
+                    }, "slow").
+                    animate({
+                        opacity:1
+                    }, "slow");
+            }, 200);
         }
     }, {
         templateName: "linkListView"
     });
-    remIt.views.register(Link, Link.ListView);
+    remIt.views.register(Link.ListView);
 
 })(remIt.module("link"));

@@ -7,6 +7,7 @@ import com.appspot.rememberit.dao.User;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * User: Babinsky
@@ -111,5 +112,15 @@ public class RememberItFacade {
             links.remove(i);
             links.add(i, link);
         }
+    }
+
+    public Link addLink(Link link) {
+        if (link != null) {
+            this.links.add(link);
+
+            return link;
+        }
+
+        return null;
     }
 }
