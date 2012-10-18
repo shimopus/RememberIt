@@ -32,9 +32,43 @@
                             response([]);
                         }
                     });
+                },
+
+                select: function (event, li) {
+                    _this.onSelect(li);
+                    return false;
                 }
-            });
+            })
+            .data( "autocomplete" )._renderItem = _.bind(this.renderSuggestion, this);
             return this;
+        },
+
+        renderSuggestion: function( ul, suggestion ) {
+            var aContent = "";
+
+            switch (suggestion.type) {
+                case "LINK" : {
+                    aContent = suggestion.label;
+                    break;
+                }
+
+                case "TAG" : {
+                    aContent = $("<span>")
+                        .addClass("label")
+                        .text(suggestion.label);
+                    break;
+                }
+            }
+
+            return $("<li>")
+                .data("item.autocomplete", suggestion)
+                .append($("<a>").append(aContent))
+                .appendTo(ul);
+        },
+
+        onSelect: function (li) {
+            window.document.location.href = li.item.url;
+            this.$el.find("input").val("");
         }
     }, {
         templateName: Search.name

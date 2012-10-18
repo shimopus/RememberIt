@@ -15,8 +15,15 @@
     });
 
     TagTree.View = Backbone.View.extend({
+        tree: null,
+
+        initialize: function () {
+            remIt.on("link:changeList", this.refreshTree, this);
+        },
+
         render: function () {
-            if (!$("#tagTreeContainer").children().length) {
+            var _this = this;
+            if (!this.tree) {
                 $("#tagTreeContainer").jstree({
                         core: {
                             animation: false
@@ -37,8 +44,18 @@
                 )
                     .bind("loaded.jstree", function () {
                         $(this).find("ul:first").addClass("affix");
+                        _this.tree = $.jstree._reference($(this));
+                        _this.tree.save_opened();
                     });
             }
+        },
+
+        refreshTree: function () {
+            this.tree.refresh(); //TODO how to do it?
+        },
+
+        beforeClose: function () {
+            this.tree.destroy();
         }
     });
 

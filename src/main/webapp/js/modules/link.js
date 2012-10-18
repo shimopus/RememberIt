@@ -39,7 +39,7 @@
         className: "unstyled",
 
         events: {
-            "click #editLink": "editLink"
+            "click #editLink": "editLinkButton"
         },
 
         initialize: function () {
@@ -50,11 +50,13 @@
             this.model.on("change", function(link) {
                 this.updateLink(link);
                 this.focusLink(link);
+                remIt.trigger("link:changeList");
             }, this);
 
             this.model.on("add", function(link) {
                 this.$el.append(this.renderLink(link));
                 this.focusLink(link);
+                remIt.trigger("link:changeList");
             }, this);
 
             remIt.module("filter").router.on("route:filterByTag", this.filterByTag, this);
@@ -62,6 +64,8 @@
             remIt.on("linkDialog:add", this.refreshList, this);
 
             $(document).on("mousemove", _.bind(this.document_mousemove, this));
+
+            this.initShareButton();
         },
 
         render: function () {
@@ -93,15 +97,59 @@
         initActionsBar: function () {
             this.$el.html(this.template());
             this.$el.data("actionsBar", this.$el.find("div.actions"));
+            this.$el.find("a#shareLink").css("width", "14px");
+        },
+
+        initShareButton: function () {
+            window.addthis_config = {
+                services_expanded: "facebook," +
+                    "facebook_like," +
+                    "twitter," +
+                    "vk," +
+                    "odnoklassniki_ru," +
+                    "delicious," +
+                    "email",
+
+                services_compact: "facebook," +
+                    "facebook_like," +
+                    "twitter," +
+                    "vk," +
+                    "odnoklassniki_ru," +
+                    "delicious," +
+                    "email",
+
+                ui_click: true,
+
+                data_track_clickback: false
+            }
+        },
+
+        configureShareButtonFor: function (li) {
+            addthis.button("#shareLink", window.addthis_config, {
+                url: li.find("a.linkUrl").attr("href"),
+                title: li.find("a.linkUrl").text(),
+                description: li.find("pre").text()
+            });
         },
 
         document_mousemove: function (event) {
+            var ADDTHIS_DIALOG_ID = "at20mc";
+
             var li = $(event.target);
-            if (!li.hasClass("link-container")) {
-                li = li.parents("li.link-container");
-                if (!li.length) {
-                    this.show_hideActionsBar(null);
-                    return;
+
+            if (!li.hasClass("link-container") || !li.attr("id") === ADDTHIS_DIALOG_ID) {
+                var maybeli = li.parents("li.link-container");
+
+                if (!maybeli.length) {
+                    maybeli = li.parents("#" + ADDTHIS_DIALOG_ID);
+                    if (!maybeli.length) {
+                        this.show_hideActionsBar(null);
+                        return;
+                    } else {
+                        li = this.$el.data("currentLi");
+                    }
+                } else {
+                    li = maybeli;
                 }
             }
 
@@ -139,6 +187,8 @@
 
                     actionsBar.show();
 
+                    this.configureShareButtonFor(li);
+
                     this.$el.data("currentLi", li);
                 }
             }
@@ -152,7 +202,7 @@
             });
         },
 
-        editLink: function () {
+        editLinkButton: function () {
             var li = this.$el.data("currentLi");
             if (li) {
                 var link = this.model.get(li.find("section").attr("id"));

@@ -7,10 +7,12 @@ package com.appspot.rememberit.dao;
 public class Suggestion {
     private String label;
     private String url;
+    private Type type;
 
-    public Suggestion(String label, String url) {
+    public Suggestion(String label, String url, Type type) {
         this.label = label;
         this.url = url;
+        this.type = type;
     }
 
     public String getLabel() {
@@ -27,5 +29,17 @@ public class Suggestion {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public enum Type {
+        TAG, LINK
     }
 }

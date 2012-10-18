@@ -22,8 +22,8 @@ public class SearchResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Suggestion> getSuggestions(@PathParam("term") String term){
         List<Suggestion> suggestions = new ArrayList<Suggestion>();
-        suggestions.add(new Suggestion("Test", "/tag/Test"));
-        suggestions.add(new Suggestion("Yandex.ru", "http://www.yandex.ru"));
+        suggestions.add(new Suggestion("Test", "#/tag/Test", Suggestion.Type.TAG));
+        suggestions.add(new Suggestion("Yandex.ru", "http://www.yandex.ru", Suggestion.Type.LINK));
         return suggestions;
     }
 }

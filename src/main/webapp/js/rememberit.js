@@ -58,8 +58,9 @@ var RememberItRouter = Backbone.Router.extend({
         $("#searchContainer").html(new Search.View().render().$el);
 
         var Filter = remIt.module("filter");
+        this.filterModel = new Filter.Model();
         $("#searchContainer").append(new Filter.View({
-            model: new Filter.Model()
+            model: this.filterModel
         }).render().$el);
 
         var Link = remIt.module("link");
@@ -89,6 +90,9 @@ var RememberItRouter = Backbone.Router.extend({
 
     home: function () {
         this.linksView.model.fetch();
+        this.filterModel.set({
+            "tagLabel": ""
+        });
     }
 });
 
