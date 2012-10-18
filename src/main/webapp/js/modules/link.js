@@ -39,7 +39,8 @@
         className: "unstyled",
 
         events: {
-            "click #editLink": "editLinkButton"
+            "click #editLink": "editLinkButton",
+            "click #deleteLink": "deleteLinkButton"
         },
 
         initialize: function () {
@@ -56,6 +57,11 @@
             this.model.on("add", function(link) {
                 this.$el.append(this.renderLink(link));
                 this.focusLink(link);
+                remIt.trigger("link:changeList");
+            }, this);
+
+            this.model.on("remove", function(link) {
+                this.$el.find("section#" + link.get("id")).parent("li").remove();
                 remIt.trigger("link:changeList");
             }, this);
 
@@ -222,6 +228,17 @@
                         stateHidden: false,
                         operation: "Edit"
                     });
+                }
+            }
+        },
+
+        deleteLinkButton: function () {
+            var li = this.$el.data("currentLi");
+            if (li) {
+                var link = this.model.get(li.find("section").attr("id"));
+                if (link) {
+                    this.model.remove(link);
+                    link.destroy();
                 }
             }
         },

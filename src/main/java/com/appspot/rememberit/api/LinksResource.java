@@ -42,4 +42,11 @@ public class LinksResource {
     public Link addLinkById(Link link) {
         return RememberItFacade.getInstance().addLink(link);
     }
+
+    @DELETE
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void deleteLinkById(@PathParam("id") String id) {
+        RememberItFacade.getInstance().removeLink(id);
+    }
 }

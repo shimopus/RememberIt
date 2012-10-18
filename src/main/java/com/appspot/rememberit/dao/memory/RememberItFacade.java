@@ -4,10 +4,7 @@ import com.appspot.rememberit.dao.Link;
 import com.appspot.rememberit.dao.Tag;
 import com.appspot.rememberit.dao.User;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * User: Babinsky
@@ -122,5 +119,14 @@ public class RememberItFacade {
         }
 
         return null;
+    }
+
+    public void removeLink(String id) {
+        for (Iterator<Link> iterator = links.iterator(); iterator.hasNext(); ) {
+            Link link = iterator.next();
+            if (link.getId().equals(id)) {
+                iterator.remove();
+            }
+        }
     }
 }
