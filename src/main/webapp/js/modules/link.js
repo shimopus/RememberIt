@@ -238,7 +238,11 @@
                 var link = this.model.get(li.find("section").attr("id"));
                 if (link) {
                     this.model.remove(link);
-                    link.destroy();
+                    link.destroy({
+                        success: function () {
+                            remIt.trigger("link:remove", link);
+                        }
+                    });
                 }
             }
         },

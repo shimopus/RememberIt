@@ -1,8 +1,9 @@
 package com.appspot.rememberit.dao.memory;
 
 import com.appspot.rememberit.dao.Link;
+import com.appspot.rememberit.dao.Suggestion;
 import com.appspot.rememberit.dao.Tag;
-import com.appspot.rememberit.dao.User;
+import com.appspot.rememberit.dao.TagTreeNode;
 
 import java.util.*;
 
@@ -13,108 +14,55 @@ import java.util.*;
 public class RememberItFacade {
     public static final RememberItFacade instance = new RememberItFacade();
 
-    private RememberItFacade() {}
+    private RememberItFacade() {
+        this.addLink(new Link(
+                        "http://yandex.ru",
+                        "Yandex.ru",
+                        "Big description about this link is very big and i don`t know what can i do with it",
+                        Arrays.asList(new Tag("Test"), new Tag("Тест1"))));
+        this.addLink(new Link(
+                        "http://mail.ru",
+                        "Mail@Mail.ru",
+                        "Big description about this link is very big and i don`t know what can i do with it",
+                        Arrays.asList(new Tag("Test1"), new Tag("Тест"))));
+        this.addLink(new Link(
+                        "http://habrahabr.ru",
+                        "habrahabr",
+                        "Big description about this link is very big and i don`t know what can i do with it Big description about this link is very big and i don`t know what can i do with it Big description about this link is very big and i don`t know what can i do with it Big description about this link is very big and i don`t know what can i do with it",
+                        Arrays.asList(new Tag("Test"), new Tag("Тест"))));
+
+    }
 
     public static RememberItFacade getInstance() {
         return instance;
     }
 
-    private List<Link> links = new ArrayList<Link>(Arrays.asList(
-            new Link(
-            "http://yandex.ru",
-                    "Yandex.ru",
-                    "Big description about this link is very big and i don`t know what can i do with it",
-            Arrays.asList(new Tag("Test"), new Tag("Тест"))),
-            new Link(
-            "http://mail.ru",
-                    "Mail@Mail.ru",
-                    "Big description about this link is very big and i don`t know what can i do with it",
-            Arrays.asList(new Tag("Test"), new Tag("Тест"))),
-            new Link(
-            "http://habrahabr.ru",
-                    "habrahabr",
-                    "Big description about this link is very big and i don`t know what can i do with it Big description about this link is very big and i don`t know what can i do with it Big description about this link is very big and i don`t know what can i do with it Big description about this link is very big and i don`t know what can i do with it",
-            Arrays.asList(new Tag("Test"), new Tag("Тест"))),
-            new Link(
-            "http://yandex.ru",
-                    "Yandex.ru",
-                    "Big description about this link is very big and i don`t know what can i do with it",
-            Arrays.asList(new Tag("Test"), new Tag("Тест"))),
-            new Link(
-            "http://mail.ru",
-                    "Mail@Mail.ru",
-                    "Big description about this link is very big and i don`t know what can i do with it",
-            Arrays.asList(new Tag("Test"), new Tag("Тест"))),
-            new Link(
-            "http://habrahabr.ru",
-                    "habrahabr",
-                    "Big description about this link is very big and i don`t know what can i do with it Big description about this link is very big and i don`t know what can i do with it Big description about this link is very big and i don`t know what can i do with it Big description about this link is very big and i don`t know what can i do with it",
-            Arrays.asList(new Tag("Test"), new Tag("Тест"))),
-            new Link(
-            "http://yandex.ru",
-                    "Yandex.ru",
-                    "Big description about this link is very big and i don`t know what can i do with it",
-            Arrays.asList(new Tag("Test"), new Tag("Тест"))),
-            new Link(
-            "http://mail.ru",
-                    "Mail@Mail.ru",
-                    "Big description about this link is very big and i don`t know what can i do with it",
-            Arrays.asList(new Tag("Test"), new Tag("Тест"))),
-            new Link(
-            "http://habrahabr.ru",
-                    "habrahabr",
-                    "Big description about this link is very big and i don`t know what can i do with it Big description about this link is very big and i don`t know what can i do with it Big description about this link is very big and i don`t know what can i do with it Big description about this link is very big and i don`t know what can i do with it",
-            Arrays.asList(new Tag("Test"), new Tag("Тест"))),
-            new Link(
-            "http://yandex.ru",
-                    "Yandex.ru",
-                    "Big description about this link is very big and i don`t know what can i do with it",
-            Arrays.asList(new Tag("Test"), new Tag("Тест"))),
-            new Link(
-            "http://mail.ru",
-                    "Mail@Mail.ru",
-                    "Big description about this link is very big and i don`t know what can i do with it",
-            Arrays.asList(new Tag("Test"), new Tag("Тест"))),
-            new Link(
-            "http://habrahabr.ru",
-                    "habrahabr",
-                    "Big description about this link is very big and i don`t know what can i do with it Big description about this link is very big and i don`t know what can i do with it Big description about this link is very big and i don`t know what can i do with it Big description about this link is very big and i don`t know what can i do with it",
-            Arrays.asList(new Tag("Test"), new Tag("Тест")))
-            ));
-
-    public List<Link> getLinksByUser(User user) {
-        return links;
-    }
+    private RememberItStorage storage = new RememberItStorage();
 
     public Link getLinkById(String id) {
-        for (Link link : links) {
-            if (link.getId().equals(id)) {
-                return link;
-            }
-        }
-
-        return null;
+        return storage.getLink(id);
     }
 
-    public void saveLink(String id, Link link) {
-        int i = 0;
-        for (Link next : links) {
-            if (next.getId().equals(id)) {
-                break;
+    public Link saveLink(String id, Link link) {
+        if (storage.addOrUpdateLink(id, link)) {
+            //search of tags duplicates
+            List<Tag> uniqueTags = new ArrayList<Tag>(link.getTags().size());
+            for (Tag tag : link.getTags()) {
+                if (!uniqueTags.contains(tag)) {
+                    uniqueTags.add(tag);
+                }
             }
-            i++;
-        }
+            link.setTags(uniqueTags);
 
-        if (i <= links.size()) {
-            links.remove(i);
-            links.add(i, link);
+            return link;
+        } else {
+            return null;
         }
     }
 
     public Link addLink(Link link) {
         if (link != null) {
-            this.links.add(link);
-
+            storage.addOrUpdateLink(link.getId(), link);
             return link;
         }
 
@@ -122,11 +70,35 @@ public class RememberItFacade {
     }
 
     public void removeLink(String id) {
-        for (Iterator<Link> iterator = links.iterator(); iterator.hasNext(); ) {
-            Link link = iterator.next();
-            if (link.getId().equals(id)) {
-                iterator.remove();
-            }
+        storage.removeLink(id);
+    }
+
+    public List<Link> getLinksByTag(String tag) {
+        return storage.getLinksByTag(tag);
+    }
+
+    public List<TagTreeNode> getTagTree() {
+        List<TagTreeNode> tree = new ArrayList<TagTreeNode>(storage.getTags().size());
+
+        //add root level
+        for (Tag tag : storage.getTags()) {
+            tree.add(new TagTreeNode(tag));
         }
+
+        return tree;
+    }
+
+    public List<Suggestion> search(String term) {
+        List<Suggestion> result = new ArrayList<Suggestion>();
+
+        for (Link link : storage.searchLink(term)) {
+            result.add(new Suggestion(link.getTitle(), link.getUrl(), Suggestion.Type.LINK));
+        }
+
+        for (Tag tag : storage.searchTag(term)) {
+            result.add(new Suggestion(tag.getTitle(), tag.getUrl(), Suggestion.Type.TAG));
+        }
+
+        return result;
     }
 }

@@ -18,7 +18,7 @@
         tree: null,
 
         initialize: function () {
-            remIt.on("link:changeList", this.refreshTree, this);
+            remIt.on("linkDialog:add linkDialog:edit link:remove", this.refreshTree, this);
         },
 
         render: function () {
@@ -51,7 +51,15 @@
         },
 
         refreshTree: function () {
-            this.tree.refresh(); //TODO how to do it?
+            var _this = this;
+            this.model.fetch({
+                success: function () {
+                    _this.tree.destroy();
+                    _this.tree = null;
+                    $("#tagTreeContainer").html("");
+                    _this.render();
+                }
+            })
         },
 
         beforeClose: function () {

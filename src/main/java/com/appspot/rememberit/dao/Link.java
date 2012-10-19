@@ -68,4 +68,14 @@ public class Link {
     public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
+
+    public boolean hasTag(String tag) {
+        for (Tag nextTag : tags) {
+            if (nextTag.getTitle().equals(tag)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

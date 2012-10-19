@@ -1,11 +1,11 @@
 package com.appspot.rememberit.api;
 
 import com.appspot.rememberit.dao.Link;
-import com.appspot.rememberit.dao.TagTreeNode;
 import com.appspot.rememberit.dao.memory.RememberItFacade;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
@@ -18,29 +18,35 @@ public class LinksResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Link> getLinksList(@QueryParam("tag") String tag) {
         if (tag != null) {
-            return RememberItFacade.getInstance().getLinksByUser(null).subList(1, 3);
+            return RememberItFacade.getInstance().getLinksByTag(tag);
         }
-        return RememberItFacade.getInstance().getLinksByUser(null);
+        return RememberItFacade.getInstance().getLinksByTag(null);
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Link getLinkById(@PathParam("id") String id) {
-        return RememberItFacade.getInstance().getLinksByUser(null).get(0);
+        return RememberItFacade.getInstance().getLinkById(id);
     }
 
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void updateLinkById(@PathParam("id") String id, Link link) {
-        RememberItFacade.getInstance().saveLink(id, link);
+    public Link updateLinkById(@PathParam("id") String id, Link link) {
+        return RememberItFacade.getInstance().saveLink(id, link);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Link addLinkById(Link link) {
-        return RememberItFacade.getInstance().addLink(link);
+        Link ret = RememberItFacade.getInstance().addLink(link);
+        if (ret == null) {
+            Response response = Response.status(Response.Status.NOT_FOUND).build();
+            throw new WebApplicationException(response);
+        }
+
+        return ret;
     }
 
     @DELETE

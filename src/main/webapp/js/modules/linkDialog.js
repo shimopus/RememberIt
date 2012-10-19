@@ -76,8 +76,8 @@
         addTagEvent: function () {
             var tags = _.clone(this.model.get("tags"));
             var tagsInput = this.$el.find("#tags");
-            //TODO move to model
-            var newTitle = tagsInput.val();
+            var newTitle = tagsInput.val().trim();
+            if (newTitle === "") return;
             tagsInput.val("");
             tags.push({
                 title: newTitle
@@ -121,6 +121,8 @@
                 success: function () {
                     if (isAdd) {
                         remIt.trigger("linkDialog:add", link);
+                    } else {
+                        remIt.trigger("linkDialog:edit", link);
                     }
                     _this.model.set({
                         stateHidden: true

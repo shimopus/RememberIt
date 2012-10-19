@@ -45,17 +45,27 @@
 
         renderSuggestion: function( ul, suggestion ) {
             var aContent = "";
+            var term = this.$el.find("input").val().toUpperCase();
+            var label = suggestion.label;
+
+            var i = -1;
+            if ((i = suggestion.label.toUpperCase().indexOf(term)) >= 0) {
+                var start = suggestion.label.substring(0, i);
+                var middle = suggestion.label.substring(i, i + term.length);
+                var end = suggestion.label.substring(i + term.length);
+                label = _.escape(start) + "<b>" + _.escape(middle) + "</b>" + _.escape(end);
+            }
 
             switch (suggestion.type) {
                 case "LINK" : {
-                    aContent = suggestion.label;
+                    aContent = label;
                     break;
                 }
 
                 case "TAG" : {
                     aContent = $("<span>")
                         .addClass("label")
-                        .text(suggestion.label);
+                        .html(label);
                     break;
                 }
             }

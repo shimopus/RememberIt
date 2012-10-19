@@ -24,7 +24,7 @@
         },
 
         render: function () {
-            var tagLabel = this.model.get("tagLabel");
+            var tagLabel = this.model.escape("tagLabel");
             if (tagLabel) {
                 this.$el.html(this.template(this.model.toJSON()));
             } else {

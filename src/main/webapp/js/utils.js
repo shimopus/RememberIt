@@ -5,7 +5,7 @@
  */
 window.templateLoader = {
 
-    load:function (views, callback) {
+    load: function (views, callback) {
 
         var deferreds = [];
 
