@@ -82,10 +82,33 @@ public class RememberItFacade {
 
         //add root level
         for (Tag tag : storage.getTags()) {
-            tree.add(new TagTreeNode(tag));
+            TagTreeNode rootNode = new TagTreeNode(tag);
+            tree.add(rootNode);
+            addChildren(rootNode, tag, Arrays.asList(tag));
         }
 
         return tree;
+    }
+
+    private void addChildren(TagTreeNode node, Tag tag, List<Tag> alreadyAdded) {
+        List<TagTreeNode> childrenNodes = node.getChildren();
+
+        Set<Tag> children = new LinkedHashSet<Tag>();
+        List<Link> links = storage.getLinksByTag(tag.getTitle());
+        for (Link link : links) {
+            children.addAll(link.getTags());
+        }
+
+        children.removeAll(alreadyAdded);
+
+        for (Tag next : children) {
+            TagTreeNode treeNode = new TagTreeNode(next);
+            childrenNodes.add(treeNode);
+            List<Tag> added = new ArrayList<Tag>(alreadyAdded);
+            added.add(next);
+
+            addChildren(treeNode, next, added);
+        }
     }
 
     public List<Suggestion> search(String term) {

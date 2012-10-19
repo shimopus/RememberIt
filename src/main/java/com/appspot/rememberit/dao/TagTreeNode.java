@@ -2,6 +2,7 @@ package com.appspot.rememberit.dao;
 
 import com.appspot.rememberit.dao.Tag;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,7 @@ import java.util.Map;
 public class TagTreeNode {
     private Map<String, Object> data;
     private String state;
-    private List<TagTreeNode> children;
+    private List<TagTreeNode> children = new ArrayList<TagTreeNode>();
     private Map<String, String> attr;
 
     public TagTreeNode(Tag tag) {
@@ -78,4 +79,6 @@ public class TagTreeNode {
     public void setAttr(Map<String, String> attr) {
         this.attr = attr;
     }
+
+
 }
