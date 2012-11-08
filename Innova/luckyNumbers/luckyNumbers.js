@@ -1,3 +1,5 @@
+"use strict"
+
 /**
  * Render all lucky numbers from 000000 to 999999
  *
