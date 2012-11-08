@@ -4,31 +4,38 @@
 <head>
     <title>Light</title>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="http://raphaeljs.com/raphael.js"></script>
     <script type="text/javascript" src="light.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
     <style type="text/css">
         .start {
             background: blue no-repeat;
             position: absolute;
-            top: 235px;
+            top: 10px;
             left: 600px;
-            width: 20px;
-            height: 20px;
+            width: 50px;
+            height: 50px;
+            cursor: move;
         }
 
         .end {
             background: red no-repeat;
             position: absolute;
-            top: 23px;
-            left: 16px;
+            top: 400px;
+            left: 10px;
             width: 260px;
             height: 200px;
+            cursor: move;
+        }
+
+        svg {
+            z-index: -1;
         }
     </style>
 </head>
 <body>
     <div id="start" class="start">s</div>
     <div id="end" class="end">e</div>
-    <div id="canvas" class="canvas"></div>
 </body>
 </html>

@@ -42,6 +42,7 @@
     <orderEntry type="library" name="Maven: org.apache.derby:derby:10.9.1.0" level="project" />
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="raphael" level="application" />
+    <orderEntry type="library" name="jquery-ui" level="application" />
   </component>
 </module>
 
