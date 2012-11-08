@@ -123,7 +123,9 @@ function drawLuckyNumbersIn(element) {
 document.addEventListener("DOMContentLoaded", function() {
     var btn = document.getElementById("btn");
     btn.addEventListener("click", function () {
-        console.log("Hello World!");
+        var hello = document.getElementById("hello");
+        hello.setAttribute("style", "color: red");
+        hello.innerHTML += "!";
     }, false);
 
     var element = document.getElementById("luckyNumbers");

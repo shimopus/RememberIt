@@ -10,11 +10,20 @@
             top: 0;
             left: 150px;
         }
+
+        .results {
+            overflow: scroll;
+            height: 500px;
+            width: 200px;
+        }
     </style>
 </head>
 <body>
-    <div id="luckyNumbers">Lucky Numbers:
+    <div>Lucky Numbers:</div>
+    <div id="luckyNumbers" class="results"></div>
+    <div class="btn">
+        <button id="btn">Say hello</button>
+        <span id="hello" style="display: none;">Hello World</span>
     </div>
-    <button id="btn" class="btn">Say hello</button>
 </body>
 </html>
