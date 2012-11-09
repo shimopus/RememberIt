@@ -1,4 +1,7 @@
 (function($, undefined) {
+    var placeHolder = $("<div class='placeHolder'></div>");
+    var currentReplacedBlock;
+
     function Block(blockElement) {
         this.blockElement = $(blockElement) || $("<div></div>");
         this.colNum = undefined;
@@ -8,12 +11,12 @@
         this.width = undefined;
         this.height = undefined;
 
-        this.placeHolder = $("<div class='placeHolder'></div>");
-
         this.initialize = function() {
             this.blockElement.draggable({
+                helper: "clone",
                 opacity: 0.5,
                 revert: "invalid",
+                revertDuration: 0,
                 zIndex: 100000
             });
             this.bindListeners();
@@ -26,14 +29,26 @@
             this.blockElement.on("dragstop", bind(this.onDragStop, this));
         };
 
-        this.onDragStart = function() {
+        this.onDragStart = function(event, ui) {
             this.putPlaceHolder();
+            ui.helper.css({
+                width: this.width
+            });
             console.log("start");
         };
 
         this.onDrag = function(event, ui) {
-            var currentOffset = ui.offset;
+            var blockForReplace = this.getBlockForReplace(ui.offset);
 
+            if (blockForReplace && blockForReplace !== currentReplacedBlock) {
+                this.showPlaceForInsert(blockForReplace);
+                ui.offset.top -= blockForReplace.height;
+                console.log("drag " + blockForReplace.blockElement.html());
+                currentReplacedBlock = blockForReplace;
+            }
+        };
+
+        this.getBlockForReplace = function(currentOffset) {
             var overladenBlock = this.getOverladenBlock(currentOffset);
             if (overladenBlock != null) {
                 var leftBorderX = overladenBlock.left;
@@ -53,10 +68,10 @@
                     return;
                 }
             } else {
-                return;
+                return null;
             }
 
-            console.log("drag " + overladenBlock.blockElement.html());
+            return overladenBlock;
         };
 
         this.getOverladenBlock = function(currentOffset) {
@@ -105,22 +120,43 @@
 
         this.onDragStop = function() {
             this.removePlaceHolder();
+            this.width = this.blockElement.width();
             console.log("stop");
         };
 
-        this.putPlaceHolder = function() {
-            $("body").append(this.placeHolder);
-            var offset = this.blockElement.offset();
-            this.placeHolder.css({
-                width: this.blockElement.width() + 2 + "px",
-                height: this.blockElement.height() + 2 + "px",
-                top: offset.top - 1 + "px",
-                left: offset.left - 1 + "px"
+        this.showPlaceForInsert = function(blockForReplace) {
+            blockForReplace.blockElement.after(this.blockElement);
+
+            this.blockElement.css({
+                width: blockForReplace.width,
+                top: 0,
+                left: 0
             });
+
+            this.putPlaceHolder();
+
+            var replacedRowNum = blockForReplace.rowNum;
+            var replacedColNum = blockForReplace.colNum;
+            blockForReplace.colNum = this.colNum;
+            blockForReplace.rowNum = this.rowNum;
+            this.colNum = replacedColNum;
+            this.rowNum = replacedRowNum;
+        };
+
+        this.putPlaceHolder = function(top, left, width, height) {
+            $("body").append(placeHolder);
+
+            var offset = this.blockElement.offset();
+            placeHolder.css({
+                width: width || this.blockElement.width() + 2 + "px",
+                height: height || this.blockElement.height() + 2 + "px",
+                top: top || offset.top - 1 + "px",
+                left: left || offset.left - 1 + "px"
+            }).show();
         };
 
         this.removePlaceHolder = function() {
-            this.placeHolder.remove();
+            placeHolder.hide();
         };
     }
 
@@ -157,8 +193,8 @@
     //-----------------------------------------    START POINT    -----------------------------------------------------
     $(function () {
         $("#widgetsContainer tr").each(function (index, tr){
-            $(tr).find("td").each(function(rowNum, td) {
-                $(td).find(".block").each(function(colNum, block) {
+            $(tr).find("td").each(function(colNum, td) {
+                $(td).find(".block").each(function(rowNum, block) {
                     addBlock(colNum, rowNum, new Block(block).initialize());
                 });
             });
