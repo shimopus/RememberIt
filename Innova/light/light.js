@@ -145,8 +145,8 @@
             canvas.path.x2, canvas.path.y2,
             canvas.path.x, canvas.path.y))
             .attr({
-                fill: "90-#fff:5-#000:95",
-                "fill-opacity": "0.5",
+                fill: "90-#fff:5-#fff:95",
+                "fill-opacity": "0",
                 stroke: "none",
                 opacity: "0.05"
             });
