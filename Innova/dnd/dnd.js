@@ -1,14 +1,6 @@
 (function($, undefined) {
     function Block(blockElement) {
-        var Direction = {
-            UP: "up",
-            DOWN: "down",
-            LEFT: "left",
-            RIGHT: "right"
-        };
-
         this.blockElement = $(blockElement) || $("<div></div>");
-        this.realParent = this.blockElement.parent();
         this.colNum = undefined;
         this.rowNum = undefined;
         this.top = undefined;
@@ -39,68 +31,76 @@
             console.log("start");
         };
 
-        this.prevOffset = null;
-
         this.onDrag = function(event, ui) {
             var currentOffset = ui.offset;
 
-            //Determine direction
-            if (!this.prevOffset) {
-                return true;
-            }
+            var overladenBlock = this.getOverladenBlock(currentOffset);
+            if (overladenBlock != null) {
+                var leftBorderX = overladenBlock.left;
+                var rightBorderX = overladenBlock.left + overladenBlock.width;
+                var topBorderY = overladenBlock.top;
+                var bottomBorderY = overladenBlock.top + overladenBlock.height;
 
-            var direction;
-            var verticalDirection = {
-                value: currentOffset.top - this.prevOffset.top,
-                direction: this.value > 0 ? Direction.DOWN : Direction.UP
-            };
-            var horizontalDirectionVal = {
-                value: currentOffset.left - this.prevOffset.left,
-                direction: this.value > 0 ? Direction.RIGHT : Direction.LEFT
-            };
 
-            if (Math.max(Math.floor(verticalDirection.value), Math.floor(horizontalDirectionVal.value)) === Math.floor(verticalDirection.value)) {
-                direction = verticalDirection.direction;
+                var blockCenterCoords = {
+                    top: currentOffset.top + Math.round(this.height / 2),
+                    left: currentOffset.left + Math.round(this.width / 2)
+                };
+
+                if (!((leftBorderX <= blockCenterCoords.left && rightBorderX >= blockCenterCoords.left)
+                    &&
+                    (topBorderY <= blockCenterCoords.top && bottomBorderY >= blockCenterCoords.top))) {
+                    return;
+                }
             } else {
-                direction = horizontalDirectionVal.direction;
+                return;
             }
 
-            this.prevOffset = currentOffset;
-
-
-
-            console.log("drag");
+            console.log("drag " + overladenBlock.blockElement.html());
         };
 
-        this.getOverladenBlock = function(direction) {
+        this.getOverladenBlock = function(currentOffset) {
             var _this = this;
-            $(blocksGrid).each(function(colNum, col) {
-                $(blocksGrid[colNum]).each(function(rowNum, block) {
-                    switch (direction) {
-                        case Direction.UP: {
-                            if (rowNum >= 1) {
-                                var borderCoords = {
-                                    top: _this.top,
-                                    left: _this.left
-                                };
+            var maxOverlay = 1;
+            var maxOverlayBlock = null;
 
-                                for (var i = rowNum; i < blocksGrid[colNum].length; i--) {
-                                    var block = blocksGrid[colNum][i];
-                                    var blockOffset = block.offset();
-                                    var center = {
-                                        top: Math.round(blockOffset.top/2),
-                                        left: Math.round(blockOffset.left/2)
-                                    }
-                                }
-
-                            }
-                            break;
-                        }
+            $.each(blocksGrid, function (colNum) {
+                $.each(blocksGrid[colNum], function (rowNum, block) {
+                    if (block.colNum === _this.colNum && block.rowNum === _this.rowNum) {
+                        return true; //continue
                     }
 
-                    return null;
-                })
+                    /*var blockOffset = block.blockElement.offset(); //TODO Optimize it
+                    blockOffset.width = block.width;
+                    blockOffset.height = block.height;*/
+
+                    currentOffset.width = _this.width;
+                    currentOffset.height = _this.height;
+
+                    var overlayFactor = _this.getBlocksIntersection(/*blockOffset*/block, currentOffset) || 0;
+                    if (Math.max(maxOverlay, overlayFactor) === overlayFactor) {
+                        maxOverlay = overlayFactor;
+                        maxOverlayBlock = block;
+                    }
+                });
             });
+
+            return maxOverlayBlock;
+        };
+
+        this.getBlocksIntersection = function(firstBlock, secondBlock) {
+            var x0 = Math.max(firstBlock.left, secondBlock.left);
+            var x1 = Math.min(firstBlock.left + firstBlock.width, secondBlock.left + secondBlock.width);
+
+            if (x0 <= x1) {
+                var y0 = Math.max(firstBlock.top, secondBlock.top);
+                var y1 = Math.min(firstBlock.top + firstBlock.height, secondBlock.top + secondBlock.height);
+
+                if (y0 <= y1) {
+                    return (x1 - x0) * (y1 - y0);
+                }
+            }
+            return null;
         };
 
         this.onDragStop = function() {
@@ -124,9 +124,7 @@
         };
     }
 
-    var blocksGrid = [{
-
-    }];
+    var blocksGrid = [];
 
     //--------------------------------------------    UTILS    --------------------------------------------------------
     function bind(func, context /*, args*/) {
@@ -144,11 +142,7 @@
             blocksGrid[colNum] = []
         }
 
-        if (!blocksGrid[colNum][rowNum]) {
-            blocksGrid[colNum][rowNum] = [];
-        }
-
-        blocksGrid[colNum][rowNum].push(block);
+        blocksGrid[colNum][rowNum] = block;
         block.colNum = colNum;
         block.rowNum = rowNum;
 
