@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Drag&Drop</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="dnd.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
+    <style type="text/css">
+        .dashboard {
+            position: relative;
+        }
+
+        .colLeft {
+            background-color: #ffebcd;
+        }
+
+        .colCenter {
+            background-color: #7aba7b;
+        }
+
+        .colRight {
+            background-color: #d8bfd8;
+        }
+
+        .block {
+            background-color: #ffffff;
+            border: 1px solid gray;
+            margin: 2px 2px 5px 2px;
+            cursor: move;
+        }
+
+        .placeHolder {
+            position: absolute;
+            background: #e6e6fa;
+            border: 1px dotted gray;
+            margin: 0 0 3px 0;
+        }
+
+        .grid td {
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+    <div id="dashboard" class="dashboard">
+        <table id="widgetsContainer" width="100%" class="grid">
+            <colgroup>
+                <col width="20%" class="colLeft">
+                <col width="45%" class="colCenter">
+                <col width="35%" class="colRight">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="block" id="box1">
+                            Box 1 content
+                        </div>
+                        <div class="block" id="bo4">
+                            Box 4 content
+                        </div>
+                        <div class="block" id="box5">
+                            Box 5 content
+                        </div>
+                    </td>
+                    <td>
+                        <div class="block" id="box2">
+                            Box 2 content
+                        </div>
+                    </td>
+                    <td>
+                        <div class="block" id="box3">
+                            Box 3 content
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
