@@ -23,7 +23,9 @@
         this.path = {
             x: 0, y: 0,
             x1: 0, y1: 0,
-            x2: 0, y2: 0
+            x2: 0, y2: 0,
+            circleX: 0, circleY: 0,
+            circleRadius: 0
         };
     }
 
@@ -71,19 +73,25 @@
             }
         }
 
+        canvasPath.circleX = endCoords.x + endCoords.width/2;
+        canvasPath.circleY = endCoords.y + endCoords.height/2;
+        canvasPath.circleRadius = Math.max(endCoords.width, endCoords.height)/2 + 50;
+
         var canvas = new Canvas();
         canvas.coordinates = getCanvasCoordinatesByPath(canvasPath);
         canvas.path = makeCanvasPathRelative(canvasPath, canvas.coordinates);
+        canvas.endElementCoords = endCoords;
+
 
         return canvas;
     }
 
     function getCanvasCoordinatesByPath(canvasPath) {
         var coordinates = new Coordinates();
-        coordinates.x = Math.min(canvasPath.x, canvasPath.x1, canvasPath.x2);
-        coordinates.y = Math.min(canvasPath.y, canvasPath.y1, canvasPath.y2);
-        coordinates.width = Math.max(canvasPath.x, canvasPath.x1, canvasPath.x2) - coordinates.x;
-        coordinates.height = Math.max(canvasPath.y, canvasPath.y1, canvasPath.y2) - coordinates.y;
+        coordinates.x = Math.min(canvasPath.x, canvasPath.x1, canvasPath.x2, canvasPath.circleX - canvasPath.circleRadius);
+        coordinates.y = Math.min(canvasPath.y, canvasPath.y1, canvasPath.y2, canvasPath.circleY - canvasPath.circleRadius);
+        coordinates.width = Math.max(canvasPath.x, canvasPath.x1, canvasPath.x2, canvasPath.circleX + canvasPath.circleRadius) - coordinates.x;
+        coordinates.height = Math.max(canvasPath.y, canvasPath.y1, canvasPath.y2, canvasPath.circleY + canvasPath.circleRadius) - coordinates.y;
 
         return coordinates;
     }
@@ -96,6 +104,8 @@
         path.y = canvasPath.y - canvasCoords.y;
         path.y1 = canvasPath.y1 - canvasCoords.y;
         path.y2 = canvasPath.y2 - canvasCoords.y;
+        path.circleX = canvasPath.circleX - canvasCoords.x;
+        path.circleY = canvasPath.circleY - canvasCoords.y;
 
         return path;
     }
@@ -117,6 +127,17 @@
         paper = Raphael(
             canvas.coordinates.x, canvas.coordinates.y,
             canvas.coordinates.width, canvas.coordinates.height);
+
+        paper.circle(
+            (canvas.endElementCoords.x - canvas.coordinates.x) + (canvas.endElementCoords.width/2),
+            (canvas.endElementCoords.y - canvas.coordinates.y) + (canvas.endElementCoords.height/2),
+            (Math.max(canvas.endElementCoords.width, canvas.endElementCoords.height)/2) + 50
+        ).attr({
+                fill: "90-#fff:5-#000:80",
+                "fill-opacity": 0.02,
+                stroke: "none",
+                opacity: 0
+            });
 
         paper.path(Raphael.format("M{0},{1}L{2},{3}L{4},{5}L{6},{7}z",
             canvas.path.x, canvas.path.y,
