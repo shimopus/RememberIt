@@ -3,10 +3,10 @@
 <html>
 <head>
     <title>Drag&Drop</title>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../jsLibs/jquery.min.js"></script>
+    <script type="text/javascript" src="../jsLibs/jquery-ui.min.js"></script>
     <script type="text/javascript" src="dnd.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="../jsLibs/jquery-ui.css">
     <style type="text/css">
         .dashboard {
             position: relative;
@@ -44,6 +44,7 @@
     </style>
 </head>
 <body>
+    <button id="revert">Revert All</button>
     <div id="dashboard" class="dashboard">
         <table id="widgetsContainer" width="100%" class="grid">
             <colgroup>
@@ -54,24 +55,35 @@
             <tbody>
                 <tr>
                     <td>
-                        <div class="block" id="box1">
+                        <div class="block">
                             Box 1 content
                         </div>
-                        <div class="block" id="bo4">
-                            Box 4 content
+                        <div class="block">
+                            Box 3 content Box 3 content Box 3 content Box 3 content Box 3 content Box 3 content
+                            Box 3 content Box 3 content Box 3 content Box 3 content Box 3 content Box 3 content Box 3 content
                         </div>
-                        <div class="block" id="box5">
+                        <div class="block">
                             Box 5 content
                         </div>
                     </td>
                     <td>
-                        <div class="block" id="box2">
+                        <div class="block">
                             Box 2 content
+                        </div>
+                        <div class="block">
+                            Box 6 content
+                        </div>
+                        <div class="block">
+                            Box 2 content Box 2 content Box 2 content Box 2 content Box 2 content Box 2 content
+                            Box 2 content Box 2 content Box 2 content Box 2 content Box 2 content Box 2 content Box 2 content
                         </div>
                     </td>
                     <td>
-                        <div class="block" id="box3">
+                        <div class="block">
                             Box 3 content
+                        </div>
+                        <div class="block">
+                            Box 4 content
                         </div>
                     </td>
                 </tr>

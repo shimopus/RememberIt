@@ -2,6 +2,13 @@
     var placeHolder = $("<div class='placeHolder'></div>");
     var currentReplacedBlock;
 
+    var REPLACE_SIDE = {
+        TOP: "top",
+        BOTTOM: "bottom",
+        END: "end",
+        START: "start"
+    };
+
     function Block(blockElement) {
         this.blockElement = $(blockElement) || $("<div></div>");
         this.colNum = undefined;
@@ -9,7 +16,6 @@
         this.top = undefined;
         this.left = undefined;
         this.width = undefined;
-        this.height = undefined;
 
         this.initialize = function() {
             this.blockElement.draggable({
@@ -34,65 +40,97 @@
             ui.helper.css({
                 width: this.width
             });
-            console.log("start");
         };
 
         this.onDrag = function(event, ui) {
-            var blockForReplace = this.getBlockForReplace(ui.offset);
+            var forReplace = this.getBlockForReplace(ui.offset);
 
-            if (blockForReplace && blockForReplace !== currentReplacedBlock) {
-                this.showPlaceForInsert(blockForReplace);
-                ui.offset.top -= blockForReplace.height;
-                console.log("drag " + blockForReplace.blockElement.html());
-                currentReplacedBlock = blockForReplace;
+            if (forReplace && forReplace.block !== currentReplacedBlock) {
+                this.replaceWith(forReplace.block, forReplace.side);
+                this.adaptToNewPlace(forReplace.block, ui.helper);
+                this.putPlaceHolder();
+                currentReplacedBlock = forReplace.block;
             }
         };
 
         this.getBlockForReplace = function(currentOffset) {
-            var overladenBlock = this.getOverladenBlock(currentOffset);
-            if (overladenBlock != null) {
-                var leftBorderX = overladenBlock.left;
-                var rightBorderX = overladenBlock.left + overladenBlock.width;
-                var topBorderY = overladenBlock.top;
-                var bottomBorderY = overladenBlock.top + overladenBlock.height;
+            currentOffset.width = this.blockElement.width();
+            currentOffset.height = this.blockElement.height();
+
+            var overladenColNum = this.getOverladenColNum(currentOffset);
+
+            if (overladenColNum !== null) {
+                var overladenBlock = this.getOverladenBlock(currentOffset, overladenColNum);
+
+                if (overladenBlock.block !== null) {
+                    console.log("colNum: " + overladenColNum + ", block: " + overladenBlock.block.colNum + ":" + overladenBlock.block.rowNum);
+                    /*var leftBorderX = overladenBlock.block.left;
+                    var rightBorderX = overladenBlock.block.left + overladenBlock.block.width;
+                    var topBorderY = overladenBlock.block.top;
+                    var bottomBorderY = overladenBlock.block.top + overladenBlock.block.height;
 
 
-                var blockCenterCoords = {
-                    top: currentOffset.top + Math.round(this.height / 2),
-                    left: currentOffset.left + Math.round(this.width / 2)
-                };
+                    var blockCenterCoords = {
+                        top: currentOffset.top + Math.round(this.height / 2),
+                        left: currentOffset.left + Math.round(this.width / 2)
+                    };
 
-                if (!((leftBorderX <= blockCenterCoords.left && rightBorderX >= blockCenterCoords.left)
-                    &&
-                    (topBorderY <= blockCenterCoords.top && bottomBorderY >= blockCenterCoords.top))) {
-                    return;
+                    if (!((leftBorderX <= blockCenterCoords.left && rightBorderX >= blockCenterCoords.left)
+                        &&
+                        (topBorderY <= blockCenterCoords.top && bottomBorderY >= blockCenterCoords.top))) {
+                        return null;
+                    }*/
+
+                    if (overladenBlock.block.rowNum === 0) {
+
+                    }
                 }
-            } else {
-                return null;
+
+                return overladenBlock;
             }
 
-            return overladenBlock;
+            return null;
         };
 
-        this.getOverladenBlock = function(currentOffset) {
+        this.getOverladenColNum = function(currentOffset) {
+            var maxIntersect = -1;
+            var overladenColNum = null;
+
+            $.each(columns, function(colNum, columnDesc) {
+                var currentMax = Math.max(maxIntersect, getBlocksIntersection(currentOffset, columnDesc));
+
+                if (currentMax !== maxIntersect) {
+                    overladenColNum = colNum;
+                    maxIntersect = currentMax;
+                }
+            });
+
+            if (maxIntersect > 0) {
+                return overladenColNum;
+            }
+
+            return null;
+        };
+
+        this.getOverladenBlock = function(currentOffset, overladenColNum) {
             var _this = this;
-            var maxOverlay = 1;
+            var maxOverlay = -1;
             var maxOverlayBlock = null;
+            var lastBlock = null;
 
             $.each(blocksGrid, function (colNum) {
                 $.each(blocksGrid[colNum], function (rowNum, block) {
-                    if (block.colNum === _this.colNum && block.rowNum === _this.rowNum) {
+                    if (block === _this || block.colNum !== overladenColNum) {
                         return true; //continue
                     }
 
-                    /*var blockOffset = block.blockElement.offset(); //TODO Optimize it
-                    blockOffset.width = block.width;
-                    blockOffset.height = block.height;*/
+                    lastBlock = block;
 
-                    currentOffset.width = _this.width;
-                    currentOffset.height = _this.height;
+                    var blockOffset = block.blockElement.offset();
+                    blockOffset.width = block.blockElement.width();
+                    blockOffset.height = block.blockElement.height();
 
-                    var overlayFactor = _this.getBlocksIntersection(/*blockOffset*/block, currentOffset) || 0;
+                    var overlayFactor = getBlocksIntersection(blockOffset, currentOffset);
                     if (Math.max(maxOverlay, overlayFactor) === overlayFactor) {
                         maxOverlay = overlayFactor;
                         maxOverlayBlock = block;
@@ -100,40 +138,28 @@
                 });
             });
 
-            return maxOverlayBlock;
-        };
-
-        this.getBlocksIntersection = function(firstBlock, secondBlock) {
-            var x0 = Math.max(firstBlock.left, secondBlock.left);
-            var x1 = Math.min(firstBlock.left + firstBlock.width, secondBlock.left + secondBlock.width);
-
-            if (x0 <= x1) {
-                var y0 = Math.max(firstBlock.top, secondBlock.top);
-                var y1 = Math.min(firstBlock.top + firstBlock.height, secondBlock.top + secondBlock.height);
-
-                if (y0 <= y1) {
-                    return (x1 - x0) * (y1 - y0);
-                }
+            if (maxOverlay <= 0) {
+                return {
+                    block: lastBlock,
+                    side: REPLACE_SIDE.END
+                };
             }
-            return null;
+
+            return {
+                block: maxOverlayBlock,
+                side: REPLACE_SIDE.BOTTOM
+            };
         };
 
         this.onDragStop = function() {
             this.removePlaceHolder();
             this.width = this.blockElement.width();
-            console.log("stop");
         };
 
-        this.showPlaceForInsert = function(blockForReplace) {
-            blockForReplace.blockElement.after(this.blockElement);
-
-            this.blockElement.css({
-                width: blockForReplace.width,
-                top: 0,
-                left: 0
+        this.adaptToNewPlace = function(blockForReplace, draggableHelper){
+            draggableHelper.css({
+                width: blockForReplace.width
             });
-
-            this.putPlaceHolder();
 
             var replacedRowNum = blockForReplace.rowNum;
             var replacedColNum = blockForReplace.colNum;
@@ -141,6 +167,34 @@
             blockForReplace.rowNum = this.rowNum;
             this.colNum = replacedColNum;
             this.rowNum = replacedRowNum;
+        };
+
+        this.replaceWith = function(blockForReplace, side) {
+            switch (side) {
+                case REPLACE_SIDE.TOP: {
+                    blockForReplace.blockElement.before(this.blockElement);
+                    break;
+                }
+
+                case REPLACE_SIDE.BOTTOM: {
+                    blockForReplace.blockElement.after(this.blockElement);
+                    break;
+                }
+
+                case REPLACE_SIDE.START: {
+                    break;
+                }
+
+                case REPLACE_SIDE.END: {
+                    blockForReplace.blockElement.parent().append(this.blockElement);
+                    break;
+                }
+            }
+            if (side === REPLACE_SIDE.TOP) {
+
+            } else if (side === REPLACE_SIDE.BOTTOM) {
+
+            }
         };
 
         this.putPlaceHolder = function(top, left, width, height) {
@@ -161,8 +215,24 @@
     }
 
     var blocksGrid = [];
+    var columns = [];
 
     //--------------------------------------------    UTILS    --------------------------------------------------------
+    function getBlocksIntersection(firstBlock, secondBlock) {
+        var x0 = Math.max(firstBlock.left, secondBlock.left);
+        var x1 = Math.min(firstBlock.left + firstBlock.width, secondBlock.left + secondBlock.width);
+
+        if (x0 <= x1) {
+            var y0 = Math.max(firstBlock.top, secondBlock.top);
+            var y1 = Math.min(firstBlock.top + firstBlock.height, secondBlock.top + secondBlock.height);
+
+            if (y0 <= y1) {
+                return (x1 - x0) * (y1 - y0);
+            }
+        }
+        return -1;
+    }
+
     function bind(func, context /*, args*/) {
         var bindArgs = Array.prototype.slice.call(arguments, 2);
         function wrapper() {
@@ -190,10 +260,22 @@
         block.height = block.blockElement.height();
     }
 
+    function addColumn(colNum, td) {
+        td = $(td);
+        var columnOffset = td.offset();
+        columns[colNum] = {
+            top: columnOffset.top,
+            left: columnOffset.left,
+            width: td.width(),
+            height: td.height()
+        }
+    }
+
     //-----------------------------------------    START POINT    -----------------------------------------------------
     $(function () {
         $("#widgetsContainer tr").each(function (index, tr){
             $(tr).find("td").each(function(colNum, td) {
+                addColumn(colNum, td);
                 $(td).find(".block").each(function(rowNum, block) {
                     addBlock(colNum, rowNum, new Block(block).initialize());
                 });
