@@ -307,7 +307,15 @@
         });
 
         $("#revert").click(function() {
-
-        })
+            var _this = this;
+            $.each(blocksGrid, function (colNum) {
+                $.each(blocksGrid[colNum], function (rowNum, block) {
+                    console.log("colN: " + colNum + "col: " + columns[colNum]);
+                    columns[colNum].blockElement.append(block.blockElement);
+                    block.rowNum = rowNum;
+                    block.colNum = colNum;
+                });
+            });
+        });
     });
 })(jQuery);
