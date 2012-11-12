@@ -9,6 +9,8 @@
         START: "start"
     };
 
+    var DRAG_SENSITIVE = 10;
+
     function Block(blockElement) {
         this.blockElement = $(blockElement) || $("<div></div>");
         this.colNum = undefined;
@@ -42,15 +44,21 @@
             });
         };
 
+        this.lastTime = 0;
         this.onDrag = function(event, ui) {
-            var forReplace = this.getBlockForReplace(ui.offset);
+            if (this.lastTime > DRAG_SENSITIVE)
+            {
+                var forReplace = this.getBlockForReplace(ui.offset);
 
-            if (forReplace && forReplace.block !== currentReplacedBlock) {
-                this.replaceWith(forReplace.block, forReplace.side);
-                this.adaptToNewPlace(forReplace.block, ui.helper);
-                this.putPlaceHolder();
-                currentReplacedBlock = forReplace.block;
+                if (forReplace && forReplace.block !== currentReplacedBlock) {
+                    this.replaceWith(forReplace.block, forReplace.side);
+                    this.adaptToNewPlace(forReplace.block, ui.helper);
+                    this.putPlaceHolder();
+                    currentReplacedBlock = forReplace.block;
+                }
+                this.lastTime = 0;
             }
+            this.lastTime++;
         };
 
         this.getBlockForReplace = function(currentOffset) {
@@ -140,7 +148,7 @@
 
             if (maxOverlay <= 0) {
                 return {
-                    block: lastBlock,
+                    block: lastBlock || columns[overladenColNum],
                     side: REPLACE_SIDE.END
                 };
             }
@@ -161,12 +169,26 @@
                 width: blockForReplace.width
             });
 
-            var replacedRowNum = blockForReplace.rowNum;
-            var replacedColNum = blockForReplace.colNum;
-            blockForReplace.colNum = this.colNum;
-            blockForReplace.rowNum = this.rowNum;
-            this.colNum = replacedColNum;
-            this.rowNum = replacedRowNum;
+            //TODO case when insert at the start
+            var _this = this;
+            $.each(blocksGrid, function (colNum) {
+                $.each(blocksGrid[colNum], function (rowNum, block) {
+                    if (block.colNum === blockForReplace.colNum) {
+                        if (block.rowNum > blockForReplace.rowNum) {
+                            block.rowNum++;
+                        }
+                    }
+
+                    if (block.colNum === _this.colNum) {
+                        if (block.rowNum > _this.rowNum) {
+                            block.rowNum--;
+                        }
+                    }
+                });
+            });
+
+            this.colNum = blockForReplace.colNum;
+            this.rowNum = blockForReplace.rowNum + 1;
         };
 
         this.replaceWith = function(blockForReplace, side) {
@@ -186,14 +208,13 @@
                 }
 
                 case REPLACE_SIDE.END: {
-                    blockForReplace.blockElement.parent().append(this.blockElement);
+                    if (blockForReplace.blockElement.hasClass("block")) {
+                        blockForReplace.blockElement.after(this.blockElement);
+                    } else {
+                        blockForReplace.blockElement.append(this.blockElement);
+                    }
                     break;
                 }
-            }
-            if (side === REPLACE_SIDE.TOP) {
-
-            } else if (side === REPLACE_SIDE.BOTTOM) {
-
             }
         };
 
@@ -267,7 +288,10 @@
             top: columnOffset.top,
             left: columnOffset.left,
             width: td.width(),
-            height: td.height()
+            height: td.height(),
+            blockElement: td,
+            colNum: colNum,
+            rowNum: 0
         }
     }
 
@@ -281,5 +305,9 @@
                 });
             });
         });
+
+        $("#revert").click(function() {
+
+        })
     });
 })(jQuery);
