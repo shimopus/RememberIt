@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom Events</title>
+    <script type="text/javascript" src="customEvents.js"></script>
+    <style type="text/css">
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: #aecff7;
+            border: solid 1px;
+            display: block;
+            float: left;
+            margin: 0 5px;
+            text-align: center;
+        }
+
+        .clear {
+            clear: both;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <span id="1" class="box">id=1</span>
+    <span id="2" class="box">id=2</span>
+    <span id="3" class="box">id=3</span>
+    <span id="4" class="box">id=4</span>
+    <span id="5" class="box">id=5</span>
+    <span id="6" class="box">id=6</span>
+    <span id="7" class="box">id=7</span>
+    <span id="8" class="box">id=8</span>
+    <span id="9" class="box">id=9</span>
+
+    <div class="clear"></div>
+
+    <input id="id" type="text" title="Enter id of element" placeholder="Enter id of element" style="width: 120px"/>
+    <input id="typeToAdd" type="text" title="Enter type of event to listen" placeholder="Enter type of event to listen" style="width: 200px"/>
+    <input id="text" type="text" title="Enter text for added handler" placeholder="Enter text for added handler" style="width: 200px"/>
+    <button id="on" type="button">Add custom event with alert</button>
+    <br/>
+    <input id="idToTrigger" type="text" title="Enter id of triggered element" placeholder="Enter id of triggered element" style="width: 200px"/>
+    <input id="typeToTrigger" type="text" title="Enter type of event" placeholder="Enter type of event" style="width: 200px"/>
+    <button id="trigger" type="button">Trigger custom event</button>
+    <br/>
+    <input id="idToOff" type="text" title="Enter id of triggered element" placeholder="Enter id of element to remove" style="width: 200px"/>
+    <input id="typeToOff" type="text" title="Enter type of event" placeholder="Enter type of event to remove" style="width: 200px"/>
+    <button id="off" type="button">Remove all custom events</button>
+
+    <script type="text/javascript">
+
+
+        init();
+
+
+        /**
+         * cross-browser add event to element
+         *
+         * @param element
+         * @param type - as for Element.addEventListener
+         * @param handler
+         */
+        function addEventListener(element, type, handler) {
+            if (element.attachEvent) {
+                element.attachEvent("on" + type, handler);
+            } else if (element.addEventListener) {
+                element.addEventListener(type, handler);
+            }
+        }
+
+        function init() {
+            var id = document.getElementById("id").value;
+            var type = document.getElementById("typeToAdd").value;
+            var text = document.getElementById("text").value;
+            var on = document.getElementById("on");
+            var off = document.getElementById("off");
+            var trigger = document.getElementById("trigger");
+
+            addEventListener(on, "click", function() {
+                addCustomHandler(id, type, text);
+            });
+            addEventListener(trigger, "click", function() {
+                triggerCustomHandler(text);
+            });
+            addEventListener(off, "click", function() {
+                removeCustomHandler(text);
+            });
+        }
+
+        function addCustomHandler(element, text) {
+            CEvents(element).on(CUSTOM_EVENT_TYPE, function() {
+                alert(text);
+            });
+        }
+
+        function triggerCustomHandler(element) {
+            CEvents(element).trigger(CUSTOM_EVENT_TYPE);
+        }
+
+        function removeCustomHandler(element) {
+            CEvents(element).off(CUSTOM_EVENT_TYPE);
+        }
+    </script>
+</body>
+</html>
