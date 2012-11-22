@@ -13,6 +13,7 @@
             float: left;
             margin: 0 5px;
             text-align: center;
+            overflow: auto;
         }
 
         .clear {
@@ -33,7 +34,9 @@
     <span id="8" class="box">id=8</span>
     <span id="9" class="box">id=9</span>
 
-    <div class="clear"></div>
+    <div class="clear">
+        <button id="clear" type="button">Clear boxes</button>
+    </div>
 
     <input id="id" type="text" title="Enter id of element" placeholder="Enter id of element" style="width: 120px"/>
     <input id="typeToAdd" type="text" title="Enter type of event to listen" placeholder="Enter type of event to listen" style="width: 200px"/>
@@ -41,7 +44,7 @@
     <button id="on" type="button">Add custom event with alert</button>
     <br/>
     <input id="idToTrigger" type="text" title="Enter id of triggered element" placeholder="Enter id of triggered element" style="width: 200px"/>
-    <input id="typeToTrigger" type="text" title="Enter type of event" placeholder="Enter type of event" style="width: 200px"/>
+    <input id="typeToTrigger" type="text" title="Enter type of event" placeholder="Enter type of event to trigger" style="width: 200px"/>
     <button id="trigger" type="button">Trigger custom event</button>
     <br/>
     <input id="idToOff" type="text" title="Enter id of triggered element" placeholder="Enter id of element to remove" style="width: 200px"/>
@@ -70,36 +73,74 @@
         }
 
         function init() {
-            var id = document.getElementById("id").value;
-            var type = document.getElementById("typeToAdd").value;
-            var text = document.getElementById("text").value;
             var on = document.getElementById("on");
             var off = document.getElementById("off");
             var trigger = document.getElementById("trigger");
+            var id = document.getElementById("id");
+            var type = document.getElementById("typeToAdd");
+            var idToTrigger = document.getElementById("idToTrigger");
+            var typeToTrigger = document.getElementById("typeToTrigger");
+            var idToOff = document.getElementById("idToOff");
+            var typeToOff = document.getElementById("typeToOff");
+
 
             addEventListener(on, "click", function() {
-                addCustomHandler(id, type, text);
+                var text = document.getElementById("text").value;
+                addCustomHandler(id.value, type.value, text);
             });
+
             addEventListener(trigger, "click", function() {
-                triggerCustomHandler(text);
+                triggerCustomHandler(idToTrigger.value, typeToTrigger.value);
             });
+
             addEventListener(off, "click", function() {
-                removeCustomHandler(text);
+                removeCustomHandler(idToOff.value, typeToOff.value);
             });
-        }
 
-        function addCustomHandler(element, text) {
-            CEvents(element).on(CUSTOM_EVENT_TYPE, function() {
-                alert(text);
+            addEventListener(id, "change", function() {
+                var val = id.value;
+                idToOff.value = val;
+                idToTrigger.value = val;
             });
+
+            addEventListener(type, "change", function() {
+                var val = type.value;
+                typeToOff.value = val;
+                typeToTrigger.value = val;
+            });
+
+            addEventListener(document.getElementById("clear"), "click", clearBoxes);
         }
 
-        function triggerCustomHandler(element) {
-            CEvents(element).trigger(CUSTOM_EVENT_TYPE);
+        function addCustomHandler(id, type, text) {
+            var element = document.getElementById(id);
+            if (element) {
+                CEvents(element).on(type, function () {
+                    element.innerHTML += "</br>" + text;
+                });
+            }
         }
 
-        function removeCustomHandler(element) {
-            CEvents(element).off(CUSTOM_EVENT_TYPE);
+        function triggerCustomHandler(id, type) {
+            var element = document.getElementById(id);
+            if (element) {
+                CEvents(element).trigger(type);
+            }
+        }
+
+        function removeCustomHandler(id, type) {
+            var element = document.getElementById(id);
+            if (element) {
+                CEvents(element).off(type);
+            }
+        }
+
+        function clearBoxes() {
+            var boxes = document.getElementsByTagName("span");
+            for (var i = 0; i < boxes.length; i++) {
+                var box = boxes[i];
+                box.innerHTML = "id=" + box.getAttribute("id");
+            }
         }
     </script>
 </body>

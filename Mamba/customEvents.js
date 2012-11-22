@@ -39,7 +39,7 @@
          * @param type
          */
         this.off = function(type) {
-
+            delete element.customEvents[type];
         };
 
         /**
