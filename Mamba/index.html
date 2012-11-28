@@ -83,6 +83,15 @@
             var idToOff = document.getElementById("idToOff");
             var typeToOff = document.getElementById("typeToOff");
 
+            CEvents("1").on("click", function(e) {
+                alert("1");
+                alert(e);
+            });
+
+            CEvents("2").on("click", function() {
+                alert("2");
+                alert(this.innerHTML);
+            });
 
             addEventListener(on, "click", function() {
                 var text = document.getElementById("text").value;
@@ -116,7 +125,7 @@
             var element = document.getElementById(id);
             if (element) {
                 CEvents(element).on(type, function () {
-                    element.innerHTML += "</br>" + text;
+                    this.innerHTML += "</br>" + text;
                 });
             }
         }
