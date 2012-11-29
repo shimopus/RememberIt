@@ -34,6 +34,15 @@
     <span id="8" class="box">id=8</span>
     <span id="9" class="box">id=9</span>
 
+    <select id="12">
+        <option value="1">1</option>
+        <option value="1">1</option>
+        <option value="1">1</option>
+        <option value="1">1</option>
+        <option value="1">1</option>
+        <option value="1">1</option>
+    </select>
+
     <div class="clear">
         <button id="clear" type="button">Clear boxes</button>
     </div>
@@ -83,9 +92,17 @@
             var idToOff = document.getElementById("idToOff");
             var typeToOff = document.getElementById("typeToOff");
 
-            CEvents("1").on("click", function(e) {
-                alert("1");
-                alert(e);
+            function clickFnc() {
+                alert("3");
+            }
+
+            CEvents("3").on("click", clickFnc);
+            CEvents("3").on("click", clickFnc);
+            CEvents("3").on("click", clickFnc);
+
+            CEvents("12").on("mousedown", function(e) {
+                document.getElementById("1").innerHTML += "dsfadsfasdf";
+                if (e) e.preventDefault();
             });
 
             CEvents("2").on("click", function() {

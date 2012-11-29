@@ -1,4 +1,4 @@
-(function(undefined) {
+(function() {
     /**
      * CEvent module unify work with events in all modern browsers and IE7+
      *
@@ -14,7 +14,14 @@
         return new CEvents.obj(element)
     };
 
+    /**
+     * Helper for CEvents work
+     *
+     * @type {Object}
+     */
     CEvents.event = {
+        $$guid: 1, //Unique counter
+
         /**
          * Adds preventDefault and stopPropagation methods for IE as in W3C spec.
          */
@@ -30,16 +37,35 @@
             }
 
             return realEvent;
+        },
+
+        handleEvent: function () {
+            var event = CEvents.event.fix(event || window.event);
+            var returnValue = true;
+            var handlers = this.events[event.type];
+
+            if (handlers) {
+                for (var i in handlers) {
+                    if (handlers.hasOwnProperty(i)) {
+                        var handler = handlers[i];
+                        if (handler.call(this, event) === false) {
+                            returnValue = false;
+                        }
+                    }
+                }
+            }
+
+            return returnValue;
         }
     };
 
     CEvents.obj = function(element) {
-        if (!element.customEvents) {
-            element.customEvents = {};
+        if (!element.events) {
+            element.events = {};
         }
 
         /**
-         * Adds custom handler to element which cold be called by CEvents.trigger()
+         * Adds handler to element which cold be called by CEvents.trigger()
          *
          * @param type - type of event
          * @param handler - method which should be called when trigger method executes
@@ -54,51 +80,41 @@
                 return; //do not add handler
             }
 
-            var handlers = element.customEvents[type];
+            var handlers = element.events[type];
 
             //Add handleEvent as handler for this type of actions. Initialize handlers.
             if (!handlers) {
-                element.customEvents[type] = handlers = [];
+                element.events[type] = handlers = {};
                 //Check if on[xxx] attribute assigned
                 if (element["on" + type]) {
-                    handlers.push(element["on" + type]);
+                    handlers[0] = element["on" + type];
                     element["on" + type] = null;
                 }
 
                 if (element.addEventListener) {
-                    element.addEventListener(type, this.handleEvent, false);
+                    element.addEventListener(type, CEvents.event.handleEvent, false);
 
                 } else if (element.attachEvent) {
-                    element.attachEvent("on" + type, this.handleEvent);
+                    element.attachEvent("on" + type, CEvents.event.handleEvent);
                 }
             }
 
-            handlers.push(handler);
-        };
-
-        this.handleEvent = function () {
-            var event = CEvents.event.fix(event || window.event);
-            var returnValue = true;
-            var handlers = element.customEvents[event.type];
-
-            if (handlers) {
-                for (var i = 0; i < handlers.length; i++) {
-                    var handler = handlers[i];
-                    if (handler.call(element, event) === false) {
-                        returnValue = false;
-                    }
-                }
+            if (!handler.$$guid) {
+                handler.$$guid = CEvents.event.$$guid++;
             }
 
-            return returnValue;
+            //Do not add the same handlers twice
+            handlers[handler.$$guid] = handler;
         };
 
         /**
-         * Removes all custom handlers from element by type
+         * Removes all handlers from element by type.
+         * Parameter handler is optional. It will be deleted all handlers of this type if it was not defined.
          *
          * @param type
+         * @param handler - handler which you want to delete
          */
-        this.off = function(type) {
+        this.off = function(type, handler) {
             if (!element ||
                 element.nodeType === 2 /*attribute node*/ ||
                 element.nodeType === 3 /*text node*/ ||
@@ -107,13 +123,28 @@
                 return; //do not remove handler
             }
 
-            delete element.customEvents[type];
+            var handlers = element.events[type];
+            if (handlers) {
+                //remove specific handler
+                if (handler) {
+                    if (handlers[handler.$$guid]) {
+                        delete handlers[handler.$$guid];
+                    }
+                } else { //otherwise remove all handlers
+                    if (element.removeEventListener) {
+                        element.removeEventListener(type, CEvents.event.handleEvent, false);
+                    } else if (element.detachEvent) {
+                        element.detachEvent(type, CEvents.event.handleEvent);
+                    }
+                    delete element.events[type];
+                }
+            }
         };
 
         /**
-         * Executes all custom handlers added to element
+         * Executes all handlers added to element
          *
-         * @param type - type of custom handlers
+         * @param type - type of handlers
          * @param arg1,...,argn - optional. Arguments that will be passed in each handler
          */
         this.trigger = function(type/*[, arg1[,...,argn]]*/) {
@@ -125,12 +156,36 @@
                 return; //do not fire event
             }
 
-            var handlers = element.customEvents[type];
+            //Get nodes for bubble events
+            var path = [];
 
-            if (handlers) {
-                for (var i = 0; i < handlers.length; i++) {
-                    var handler = handlers[i];
-                    handler.apply(element, Array.prototype.slice.call(arguments, 1));
+            var elem = element;
+            var last = elem;
+
+            for (; elem; elem = elem.parentNode) {
+                path.push(elem);
+                last = elem;
+            }
+
+            // Add window only if we have document
+            if (last === (element.ownerDocument || document)) {
+                //Add window correct if node have been detached or not added in document
+                path.push(element.defaultView || element.parentWindow || window);
+            }
+
+            //Execute handlers
+            for (var i = 0; i < path.length; i++) {
+                elem = path[i];
+                if (elem.events) {
+                    var handlers = elem.events[type];
+
+                    if (handlers) {
+                        for (i in handlers) {
+                            if (handlers.hasOwnProperty(i)) {
+                                handlers[i].apply(element, Array.prototype.slice.call(arguments, 1));
+                            }
+                        }
+                    }
                 }
             }
         };
