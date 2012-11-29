@@ -3,9 +3,6 @@
 <head>
     <title>Custom Events</title>
     <script type="text/javascript" src="customEvents.js"></script>
-
-    <script type="text/javascript" src="jquery-1.8.3.js"></script>
-
     <style type="text/css">
         .box {
             width: 100px;
@@ -37,15 +34,6 @@
     <span id="8" class="box">id=8</span>
     <span id="9" class="box">id=9</span>
 
-    <select id="12">
-        <option value="1">1</option>
-        <option value="1">1</option>
-        <option value="1">1</option>
-        <option value="1">1</option>
-        <option value="1">1</option>
-        <option value="1">1</option>
-    </select>
-
     <div class="clear">
         <button id="clear" type="button">Clear boxes</button>
     </div>
@@ -62,27 +50,6 @@
     <input id="idToOff" type="text" title="Enter id of triggered element" placeholder="Enter id of element to remove" style="width: 200px"/>
     <input id="typeToOff" type="text" title="Enter type of event" placeholder="Enter type of event to remove" style="width: 200px"/>
     <button id="off" type="button">Remove all custom events</button>
-
-    <script type="text/javascript">
-        var test1 = document.getElementById('1');
-        var $test1 = $(test1);
-        var fnc = function() {
-            alert("1");
-        };
-
-        $test1.on('click', fnc);
-        $test1.on('custom', fnc);
-
-        $test1.trigger('click');
-        $test1.trigger('custom');
-
-        $test1.off('click', fnc);
-        $test1.off('custom', fnc);
-
-        $test1.trigger('click');
-        $test1.trigger('custom');
-    </script>
-
     <script type="text/javascript">
 
 
@@ -114,24 +81,6 @@
             var typeToTrigger = document.getElementById("typeToTrigger");
             var idToOff = document.getElementById("idToOff");
             var typeToOff = document.getElementById("typeToOff");
-
-            function clickFnc() {
-                alert("3");
-            }
-
-            CEvents("3").on("click", clickFnc);
-            CEvents("3").on("click", clickFnc);
-            CEvents("3").on("click", clickFnc);
-
-            CEvents("12").on("mousedown", function(e) {
-                document.getElementById("1").innerHTML += "dsfadsfasdf";
-                if (e) e.preventDefault();
-            });
-
-            CEvents("2").on("click", function() {
-                alert("2");
-                alert(this.innerHTML);
-            });
 
             addEventListener(on, "click", function() {
                 var text = document.getElementById("text").value;

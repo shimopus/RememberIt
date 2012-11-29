@@ -10,6 +10,9 @@
         //Is it DOM node?
         if (!element.tagName && element !== (element.ownerDocument || document) && element !== element.window) {
             element = document.getElementById(element);
+            if (!element) {
+                throw new Error("Could not find element with id " + element);
+            }
         }
         return new CEvents.obj(element)
     };
