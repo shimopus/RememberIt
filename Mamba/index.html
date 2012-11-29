@@ -3,6 +3,9 @@
 <head>
     <title>Custom Events</title>
     <script type="text/javascript" src="customEvents.js"></script>
+
+    <script type="text/javascript" src="jquery-1.8.3.js"></script>
+
     <style type="text/css">
         .box {
             width: 100px;
@@ -59,6 +62,22 @@
     <input id="idToOff" type="text" title="Enter id of triggered element" placeholder="Enter id of element to remove" style="width: 200px"/>
     <input id="typeToOff" type="text" title="Enter type of event" placeholder="Enter type of event to remove" style="width: 200px"/>
     <button id="off" type="button">Remove all custom events</button>
+
+    <script type="text/javascript">
+        var test1 = document.getElementById('1');
+        var $test1 = $(test1);
+        test1.addEventListener('click',function(){
+            alert('addEventListener');
+        },false);
+        test1.onclick = function(){
+            alert('on');
+        };
+        $test1.on('click',function(){
+            alert('jquery');
+        });
+
+        $test1.trigger('click');
+    </script>
 
     <script type="text/javascript">
 

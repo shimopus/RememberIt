@@ -40,6 +40,8 @@
         },
 
         handleEvent: function () {
+            if (this.isTriger) return true;
+
             var event = CEvents.event.fix(event || window.event);
             var returnValue = true;
             var handlers = this.events[event.type];
@@ -87,7 +89,9 @@
                 element.events[type] = handlers = {};
                 //Check if on[xxx] attribute assigned
                 if (element["on" + type]) {
-                    handlers[0] = element["on" + type];
+                    var hnd = element["on" + type];
+                    handlers[0] = hnd;
+                    hnd.$$guid = 0;
                     element["on" + type] = null;
                 }
 
@@ -188,6 +192,14 @@
                     }
                 }
             }
+
+            //Prevent trigger already triggered events
+            element.isTriger = true;
+            //Execute native handlers if exists
+            if (element[type]) {
+                element[type]();
+            }
+            element.isTriger = false;
         };
     };
 
