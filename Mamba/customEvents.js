@@ -8,7 +8,7 @@
      */
     var CEvents = function (element/*or id as string*/) {
         //Is it DOM node?
-        if (!element.tagName) {
+        if (!element.tagName && element !== (element.ownerDocument || document) && element !== element.window) {
             element = document.getElementById(element);
         }
         return new CEvents.obj(element)
@@ -62,6 +62,10 @@
     };
 
     CEvents.obj = function(element) {
+        if (!element) {
+            throw new Error("Wrong element parameter for CEvent");
+        }
+
         if (!element.events) {
             element.events = {};
         }
@@ -90,9 +94,8 @@
                 //Check if on[xxx] attribute assigned
                 if (element["on" + type]) {
                     var hnd = element["on" + type];
-                    handlers[0] = hnd;
-                    hnd.$$guid = 0;
                     element["on" + type] = null;
+                    this.on(type, hnd);
                 }
 
                 if (element.addEventListener) {
@@ -103,7 +106,7 @@
                 }
             }
 
-            if (!handler.$$guid) {
+            if (!handler.$$guid && handler.$$guid !== 0) {
                 handler.$$guid = CEvents.event.$$guid++;
             }
 
@@ -186,7 +189,7 @@
                     if (handlers) {
                         for (i in handlers) {
                             if (handlers.hasOwnProperty(i)) {
-                                handlers[i].apply(element, Array.prototype.slice.call(arguments, 1));
+                                handlers[i].apply(elem, Array.prototype.slice.call(arguments, 1));
                             }
                         }
                     }
