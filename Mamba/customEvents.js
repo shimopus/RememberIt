@@ -42,7 +42,7 @@
             return realEvent;
         },
 
-        handleEvent: function () {
+        handleEvent: function (event) {
             if (this.isTriger) return true;
 
             var event = CEvents.event.fix(event || window.event);
